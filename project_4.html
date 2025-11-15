@@ -37,24 +37,122 @@
             <h3 class="project_h3">LEM Signal Conditioning Board</h3>
             <h4 class="project_h4">may 2025 - aug 2025</h4>
             <p>
-                The LEM current transducer signal conditioning board is a project that aims to convert a measured AC current into a DC voltage output. The measured current fed through the LEM current transducer ranges from 125Arms to 3000Arms, and the output voltage is scaled to 10V full scale.
+                <br>
+                The LEM Current Transducer Signal Conditioning Board is a hardware design project focused on converting large AC primary currents (125&nbsp;A<sub>RMS</sub> to 3000&nbsp;A<sub>RMS</sub>) into a precise and isolated DC voltage output scaled to 10&nbsp;V full-scale.
                 <br><br>
-                LEM models:
+                When defining the project, the following soft requirements were established:
+            </p>
+
+            <ul>
+                <li>Input current range: 125&nbsp;A<sub>RMS</sub> to 2000&nbsp;A<sub>RMS</sub></li>
+                <li>Output voltage range: 0V to 10V DC</li>
+                <li>Operating bandwidth &gt; 500kHz</li>
+                <li>Total output error: ±0.05% FS</li>
+                <li>High accuracy &lt; 0.1%</li>
+                <li>Low-noise and low drift (&lt; 10 ppm/°C)</li>
+                <li>Less number of secondary turns the better (less # of turns = lower gain to scale to 10&nbsp;V)</li>
+                <li>Takes 24V input and outputs isolated +-15&nbsp;V to power LEM transducer</li>
+            </ul>
+
+            <p>
+                <br>
+                A block diagram for the system is shown below:
+                <img src="assets/P4 - Logic Block Diagram.png" alt="Block Diagram">
+                <b>LEM Models</b>
                 <br><br>
-                To begin the project, the range of measured currents must first be sorted and picked out. I decided to use the IN series due to their low-noise, high-accuracy, packaging flexibilities, and client requirements. Some IN series transducers I considered when designing the board are detailed below:
-                <ul class="lem_models">
-                    <li>IN-125: 125Arms, 0.1% accuracy, 10kHz bandwidth</li>
-                    <li>IN-2000: 2000Arms, 0.2% accuracy, 5kHz bandwidth</li>
-                    <li>IN-3000: 3000Arms, 0.2% accuracy, 5kHz bandwidth</li>
-                </ul>
-                <table class="lem_param">
-                    <tr>
-                        <th> </th>
-                    </tr>
-                    <tr>
-                        <td> </td>
-                    </tr>
-                </table>
+                To begin the project, the range of measured currents must first be sorted and picked out. I decided to use the IN series due to their low-noise, high-accuracy, packaging flexibilities, and client requirements. The transducers selected are as follows:
+            </p>   
+                <!--<ul class="lem_models">
+                    <li>IN 200-S: 200Arms, 300A peak current, 1100kHz bandwidth</li>
+                    <li>IN 400-S: 400Arms, 600A peak current, 800kHz bandwidth</li>
+                    <li>IN 1000-S: 1000Arms, 1500A peak current, 440kHz bandwidth</li>
+                    <li>IN 2000-S: 2000Arms, 3000A peak current, 140kHz bandwidth</li>
+                </ul>-->
+
+            <table class="lem_param">
+                <tr>
+                    <th><b>Model</b></th>
+                    <th><b>AC RMS Current</b></th>
+                    <th><b>Peak Measuring Current</b></th>
+                    <th><b>Measuring Bandwidth</b></th>
+                    <th><b>Secondary Turns</b></th>
+                </tr>
+                <tr>
+                    <td>IN 200-S</td>
+                    <td>200A</td>
+                    <td>300A</td>
+                    <td>1100kHz</td>
+                    <td>1000</td>
+                </tr>
+                <tr>
+                    <td>IN 400-S</td>
+                    <td>400A</td>
+                    <td>600A</td>
+                    <td>800kHz</td>
+                    <td>1500</td>
+                </tr>
+                <tr>
+                    <td>IN 1000-S</td>
+                    <td>1000A</td>
+                    <td>1500A</td>
+                    <td>440kHz</td>
+                    <td>1500</td>
+                </tr>
+                <tr>
+                    <td>IN 2000-S</td>
+                    <td>2000A</td>
+                    <td>3000A</td>
+                    <td>140kHz</td>
+                    <td>2000</td>
+                </tr>
+            </table>
+
+            <p>
+                Multiple LEM transducers were evaluated, each offering different tradeoffs in linearity, bandwidth, number of secondary turns, and noise.
+                <br><br>
+                <b>Signal Conditioning Architecture</b>
+                <br><br>
+                The transducer’s secondary current is converted into a voltage using a burden resistor (R<sub>B</sub>), and then amplified using a precision instrumentation amplifier (INA849 or PGA-series). 
+                Several equations are used to calculate the gain values and required external resistors to tune the input current and output voltage ranges.
+            </p>
+            
+            <p> 
+                <br>
+                Secondary current:
+                <br>
+                <strong>I<sub>S</sub> = I<sub>P</sub>&frasl;N<sub>S</sub></strong>
+                <br>
+                Where I<sub>P</sub> is the primary current and N<sub>S</sub> is the number of secondary turns.
+            </p>
+
+            <p>
+                <br>
+                Burden voltage:
+                <br>
+                <strong>V<sub>B</sub> = I<sub>S</sub> &middot; R<sub>B</sub></strong>
+                <br>
+                The burden voltage is used to calculate the voltage across the burden resistor, which determines the amount of gain required to scale this output into the 10V full scale.
+            </p>
+
+            <p>
+                <br>
+                Required voltage gain to reach 10 V FS:
+                <br>
+                <strong>G = 10V &frasl; V<sub>B</sub></strong>
+            </p>
+
+            <p>
+                <br>
+                Instrumentation amplifier gain resistor:
+                <br>
+                <strong>\( R_G = \frac{80000}{G - 1} \)  &nbsp;&nbsp;(INA849) </strong>
+            </p>
+
+            <p>
+                <br>
+                Power dissipation on burden resistor:
+                <br>
+                <strong>\( P = I_S^2 \cdot R_B \)</strong>
             </p>
         </section>
     </main>
