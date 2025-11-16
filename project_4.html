@@ -41,6 +41,7 @@
                 The LEM Current Transducer Signal Conditioning Board is a hardware design project focused on converting large AC primary currents (125&nbsp;A<sub>RMS</sub> to 3000&nbsp;A<sub>RMS</sub>) into a precise and isolated DC voltage output scaled to 10&nbsp;V full-scale.
                 <br><br>
                 When defining the project, the following soft requirements were established:
+                <br><br>
             </p>
 
             <ul>
@@ -118,42 +119,67 @@
             
             <p> 
                 <br>
-                Secondary current:
-                <br>
-                <strong>I<sub>S</sub> = I<sub>P</sub>&frasl;N<sub>S</sub></strong>
-                <br>
-                Where I<sub>P</sub> is the primary current and N<sub>S</sub> is the number of secondary turns.
+                The secondary current is used to calculate the burden voltage and required gain corresponding to each step of measured current requirement for the project. It is given by:
+                <span class="equation"><strong>I<sub>S</sub> = I<sub>P</sub> &frasl; N<sub>S</sub></strong></span>
+                Where I<sub>P</sub> is the primary current and N<sub>S</sub> is the number of secondary turns. To calculate the burden voltages, we must find the suggested values of the burden resistors first. These values were found by extrapolating from the datasheet of the LEM transducers. 
+                For example, at an input current of 125A, the burden resistor specified by an IN 200-S transducer is around 75&#8486, while at an input of 250A, the burden resistor is required to be around 25&#8486. 
+                <img src="assets/Burden Resistor Extrapolation.png" alt="Burden Resistor Extrapolation">
+                Of course, these values are chosen at highest allowed operating temperature and a lower valued resistor would be able to handle higher currents and below.
+                The burden voltages are then given by:
+                <span class="equation"><strong>V<sub>B</sub> = I<sub>S</sub> &middot; R<sub>B</sub></strong></span>
+                The burden voltage determines the amount of gain required to scale this output into the 10V full scale. 
+                The required voltage gain to reach 10V FS is then calculated by:
+                <span class="equation"><strong>G = 10V &frasl; V<sub>B</sub></strong></span>
+                After finding the gain required for each burden resistor, the instrumentation amplifier gain resistor can then be calculated. For this project, the instrumentation amplifier chosen was the INA849 series due to its exceeding capabilities.
+                The equation to calculate the gain resistor was given by the datasheet of the INA849. 
+                <span class="equation"><strong>R<sub>G</sub> = 6000&#8486 &frasl; (G - 1)</strong></span>
+                Finally, the power dissipation on the burden resistor must also be calculated to ensure that the resistor chosen can handle the power requirements. The power dissipation is given by:
+                <span class="equation"><strong>P = I<sub>S</sub><sup>2</sup> &middot; R<sub>B</sub></strong></span>
+                Now that all the required equations are declared, the journey to find the appropriate burden resistor commences. 
+                Since these resistors are required to dissipate high power while having low temperature drift and low tolerance, VPG Foil Resistors were chosen for this project. 
+                The process of finding the perfect range of burden resistors involved a lot of iterative calculations between the gain required and power disspation, as well as days of scouring DigiKey for the perfect resistors.
+                The chosen VPG Foil resistors had a low temperature coefficient, and resulted in gain resistor values that were easily obtainable.
+                The table below summarizes the final chosen burden resistors, gain resistors, and power dissipation values for each measured current step.
             </p>
 
-            <p>
-                <br>
-                Burden voltage:
-                <br>
-                <strong>V<sub>B</sub> = I<sub>S</sub> &middot; R<sub>B</sub></strong>
-                <br>
-                The burden voltage is used to calculate the voltage across the burden resistor, which determines the amount of gain required to scale this output into the 10V full scale.
-            </p>
-
-            <p>
-                <br>
-                Required voltage gain to reach 10 V FS:
-                <br>
-                <strong>G = 10V &frasl; V<sub>B</sub></strong>
-            </p>
-
-            <p>
-                <br>
-                Instrumentation amplifier gain resistor:
-                <br>
-                <strong>\( R_G = \frac{80000}{G - 1} \)  &nbsp;&nbsp;(INA849) </strong>
-            </p>
-
-            <p>
-                <br>
-                Power dissipation on burden resistor:
-                <br>
-                <strong>\( P = I_S^2 \cdot R_B \)</strong>
-            </p>
+             <table class="calculations">
+                <tr>
+                    <th><b>Model</b></th>
+                    <th><b>AC RMS Current</b></th>
+                    <th><b>Peak Measuring Current</b></th>
+                    <th><b>Measuring Bandwidth</b></th>
+                    <th><b>Secondary Turns</b></th>
+                </tr>
+                <tr>
+                    <td>IN 200-S</td>
+                    <td>200A</td>
+                    <td>300A</td>
+                    <td>1100kHz</td>
+                    <td>1000</td>
+                </tr>
+                <tr>
+                    <td>IN 400-S</td>
+                    <td>400A</td>
+                    <td>600A</td>
+                    <td>800kHz</td>
+                    <td>1500</td>
+                </tr>
+                <tr>
+                    <td>IN 1000-S</td>
+                    <td>1000A</td>
+                    <td>1500A</td>
+                    <td>440kHz</td>
+                    <td>1500</td>
+                </tr>
+                <tr>
+                    <td>IN 2000-S</td>
+                    <td>2000A</td>
+                    <td>3000A</td>
+                    <td>140kHz</td>
+                    <td>2000</td>
+                </tr>
+            </table>
+            
         </section>
     </main>
 
