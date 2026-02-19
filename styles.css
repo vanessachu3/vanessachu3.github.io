@@ -168,7 +168,6 @@ h2{
 }
 
 #projects{
-    justify-content: center;
     width: 300px;
     margin-top: 0px;
     margin-bottom: 0px;
@@ -177,8 +176,14 @@ h2{
     font-size: 600%; /* come back to this */
 }
 
-#split{
+#split1{
     display: block;
+    align-self: flex-start;
+}
+
+#split2{
+    display: block;
+    align-self: flex-end;
 }
 
 .card_h3{
@@ -382,6 +387,27 @@ h2{
     display: block;
     text-align: center;
     margin: 20px auto;
+}
+
+#row{
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    width: 1046.8px;
+    height: 500px;
+}
+
+#column{
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+#column img{
+    margin: 25px auto;
+    height: 90%;
+    width: 90%;
 }
 
 /* about me page */

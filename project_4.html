@@ -58,8 +58,8 @@
             <p>
                 <br>
                 A block diagram for the system is shown below:
-                <img src="assets/P4 - Logic Block Diagram.png" alt="Block Diagram">
-                <b>LEM Models</b>
+                <img src="assets/project 4/P4 - Logic Block Diagram.png" alt="Block Diagram" style="width: 70%; height: 70%;">
+                <b><ins>LEM Models</ins></b>
                 <br><br>
                 To begin the project, the range of measured currents must first be sorted and picked out. I decided to use the IN series due to their low-noise, high-accuracy, packaging flexibilities, and client requirements. The transducers selected are as follows:
             </p>   
@@ -111,7 +111,7 @@
             <p>
                 Multiple LEM transducers were evaluated, each offering different tradeoffs in linearity, bandwidth, number of secondary turns, and noise.
                 <br><br>
-                <b>Signal Conditioning Architecture</b>
+                <b><ins>Signal Conditioning Architecture</ins></b>
                 <br><br>
                 The transducer’s secondary current is converted into a voltage using a burden resistor (R<sub>B</sub>), and then amplified using a precision instrumentation amplifier (INA849 or PGA-series). 
                 Several equations are used to calculate the gain values and required external resistors to tune the input current and output voltage ranges.
@@ -123,7 +123,7 @@
                 <span class="equation"><strong>I<sub>S</sub> = I<sub>P</sub> &frasl; N<sub>S</sub></strong></span>
                 Where I<sub>P</sub> is the primary current and N<sub>S</sub> is the number of secondary turns. To calculate the burden voltages, we must find the suggested values of the burden resistors first. These values were found by extrapolating from the datasheet of the LEM transducers. 
                 For example, at an input current of 125A, the burden resistor specified by an IN 200-S transducer is around 75&#8486, while at an input of 250A, the burden resistor is required to be around 25&#8486. 
-                <img src="assets/Burden Resistor Extrapolation.png" alt="Burden Resistor Extrapolation">
+                <img src="assets/project 4/Burden Resistor Extrapolation.png" alt="Burden Resistor Extrapolation">
                 Of course, these values are chosen at highest allowed operating temperature and a lower valued resistor would be able to handle higher currents and below.
                 The burden voltages are then given by:
                 <span class="equation"><strong>V<sub>B</sub> = I<sub>S</sub> &middot; R<sub>B</sub></strong></span>
@@ -136,50 +136,108 @@
                 Finally, the power dissipation on the burden resistor must also be calculated to ensure that the resistor chosen can handle the power requirements. The power dissipation is given by:
                 <span class="equation"><strong>P = I<sub>S</sub><sup>2</sup> &middot; R<sub>B</sub></strong></span>
                 Now that all the required equations are declared, the journey to find the appropriate burden resistor commences. 
-                Since these resistors are required to dissipate high power while having low temperature drift and low tolerance, VPG Foil Resistors were chosen for this project. 
-                The process of finding the perfect range of burden resistors involved a lot of iterative calculations between the gain required and power disspation, as well as days of scouring DigiKey for the perfect resistors.
-                The chosen VPG Foil resistors had a low temperature coefficient, and resulted in gain resistor values that were easily obtainable.
-                The table below summarizes the final chosen burden resistors, gain resistors, and power dissipation values for each measured current step.
+            </p>
+
+            <p>
+                <br>
+                <b><ins>Burden Resistor Selection</ins></b>
+                <br><br>
+                Since the resistor is required to dissipate high power while having low temperature drift and low tolerance, VPG Foil Resistors were chosen for this project. 
+                The process of finding the perfect burden resistor involved a lot of iterative calculations between the gain required and power disspation, as well as days of scouring DigiKey for the right component.
+                In the end, a 1 &Omega; SMD burden resistor was chosen - Y21231R00000B9L - for simplicity since this resistor will not be removed and works for all input currents.
+                <br><br>
+                The table below summarizes the gain resistors, and power dissipation values for each measured current step and burden resistor value.
             </p>
 
              <table class="calculations">
                 <tr>
-                    <th><b>Model</b></th>
-                    <th><b>AC RMS Current</b></th>
-                    <th><b>Peak Measuring Current</b></th>
-                    <th><b>Measuring Bandwidth</b></th>
-                    <th><b>Secondary Turns</b></th>
+                    <th><b>Input Current (RMS; A)</b></th>
+                    <th><b>Burden Resistor (&Omega;)</b></th>
+                    <th><b>Gain Required (V/V)</b></th>
+                    <th><b>Gain Resistor (&Omega;)</b></th>
+                    <th><b>Power Dissipation (W)</b></th>
                 </tr>
                 <tr>
-                    <td>IN 200-S</td>
-                    <td>200A</td>
-                    <td>300A</td>
-                    <td>1100kHz</td>
+                    <td>125</td>
+                    <td>1</td>
+                    <td>80</td>
+                    <td>76</td>
+                    <td>1.172</td>
+                </tr>
+                <tr>
+                    <td>250</td>
+                    <td>1</td>
+                    <td>40</td>
+                    <td>153.8</td>
+                    <td>2.188</td>
+                </tr>
+                <tr>
+                    <td>500</td>
+                    <td>1</td>
+                    <td>30</td>
+                    <td>206.897</td>
+                    <td>0.998</td>
+                </tr>
+                <tr>
                     <td>1000</td>
+                    <td>1</td>
+                    <td>15</td>
+                    <td>428.571</td>
+                    <td>3.114</td>
                 </tr>
                 <tr>
-                    <td>IN 400-S</td>
-                    <td>400A</td>
-                    <td>600A</td>
-                    <td>800kHz</td>
                     <td>1500</td>
+                    <td>1</td>
+                    <td>810</td>
+                    <td>666.667</td>
+                    <td>1</td>
                 </tr>
                 <tr>
-                    <td>IN 1000-S</td>
-                    <td>1000A</td>
-                    <td>1500A</td>
-                    <td>440kHz</td>
-                    <td>1500</td>
-                </tr>
-                <tr>
-                    <td>IN 2000-S</td>
-                    <td>2000A</td>
-                    <td>3000A</td>
-                    <td>140kHz</td>
                     <td>2000</td>
+                    <td>1</td>
+                    <td>10</td>
+                    <td>666.667</td>
+                    <td>6</td>
+                </tr>
+                <tr>
+                    <td>3000</td>
+                    <td>1</td>
+                    <td>6.667</td>
+                    <td>1058.823</td>
+                    <td>4.5</td>
                 </tr>
             </table>
-            
+
+            <p>
+                <b><ins>PCB Design</ins></b>
+                <br><br>
+                The PCB design can start now that the main component and their values are chosen. All schematics and PCB are routed and designed on Altium Designer. 
+                <img src="assets/project 4/PCB Schematic.png" alt="PCB Schematic" style="width: 80%; height: 80%;">
+                The top circuit features a MGFW802415, a DC-DC converter to step input 24V to &plusmn;15V supply to the instrumentation amplifier and LEM transducer, that is also able to supply a current of 2.7A. 
+                The power rating of the burden resistor is designed to be 2-4x higher than the desired power to ensure functionality under high loads.
+                Since the power rating of the chosen burden resistor is 8W, with a supplied current of 2.7A, it is able to provide necessary power for the resistor. 
+                <br><br>
+                The bottom circuit details the signal conditioning portion of the project.
+                <br><br>
+                The following images shows the PCB design as well as the 3D render version. The PCB is a 2-layer design with components only on one side, features thermal dissipation around the burden resistors and its output traces,
+                high current carrying traces from the converter, as well as a ground pour on the bottom layer to help with power integrity as well as thermal regulation on the board.
+                <div id="row">
+                    <div id="column">
+                        <img src="assets/project 4/PCB Top.png" alt="PCB Top View">
+                    </div>
+                    <div id="column">
+                        <img src="assets/project 4/PCB Bottom.png" alt="PCB Bottom View">
+                    </div>
+                </div>
+                <div id="row">
+                    <div id="column">
+                        <img src="assets/project 4/PCB 3D Top.png" alt="PCB Top 3D View">
+                    </div>
+                    <div id="column">
+                        <img src="assets/project 4/PCB 3D Bottom.png" alt="PCB Bottom 3D View">
+                    </div>
+                </div>
+            </p>
         </section>
     </main>
 
