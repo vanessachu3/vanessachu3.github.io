@@ -31,9 +31,7 @@
             <h1 class="project_title">projects</h1>
         </a>
         
-        <!--third project-->
         <section class="project_section">
-            <!--add image of project for the left hand side of card-->
             <h3 class="project_h3">LEM Signal Conditioning Board</h3>
             <h4 class="project_h4">may 2025 - aug 2025</h4>
             <p>
@@ -41,14 +39,14 @@
                 The LEM Current Transducer Signal Conditioning Board is a hardware design project focused on converting large AC primary currents (125&nbsp;A<sub>RMS</sub> to 3000&nbsp;A<sub>RMS</sub>) into a precise and isolated DC voltage output scaled to 10&nbsp;V full-scale.
                 <br><br>
                 When defining the project, the following soft requirements were established:
-                <br><br>
+                <br>
             </p>
 
             <ul>
                 <li>Input current range: 125&nbsp;A<sub>RMS</sub> to 2000&nbsp;A<sub>RMS</sub></li>
-                <li>Output voltage range: 0V to 10V DC</li>
+                <li>Output voltage range: 0V to 10V DC full scale (FS)</li>
                 <li>Operating bandwidth &gt; 500kHz</li>
-                <li>Total output error: ±0.05% FS</li>
+                <li>Total output error: &plusmn;0.05% FS</li>
                 <li>High accuracy &lt; 0.1%</li>
                 <li>Low-noise and low drift (&lt; 10 ppm/°C)</li>
                 <li>Less number of secondary turns the better (less # of turns = lower gain to scale to 10&nbsp;V)</li>
@@ -59,6 +57,42 @@
                 <br>
                 A block diagram for the system is shown below:
                 <img src="assets/project 4/P4 - Logic Block Diagram.png" alt="Block Diagram" style="width: 70%; height: 70%;">
+                The input current is first measured through the LEM transducer, which outputs a scaled current for further conditioning. The signal conditioning board functions as both a DC-DC voltage converter between 24V to &plusmn;15V, as well as a convert the input LEM current into a voltage that is scalable to maximum 10V.
+                <br><br>
+            </p>
+
+            <p class="tldr">
+                <b><ins>PCB Design</ins></b>
+                <br><br>
+                The signal conditioning board features:
+                <ul>
+                    <li>A DC-DC converter to step 24V input down to &plusmn;15V and also supply current of up to 2.7A to support peripheral circuitry</li>
+                    <li>Heavy duty 1&Omega; 8W burden resistor to convert input current into voltage and support power dissipation</li>
+                    <li>An array of gain resistors to scale voltage output depending on the measured input current (125&nbsp;A<sub>RMS</sub> to 2000&nbsp;A<sub>RMS</sub>)</li>
+                    <li>Carefully chosen high-precision components with low tolerance to reach high accuracy, low noise, low drift, and total error of less than &plusmn;0.5% of full scale (FS)</li>
+                    <li>Proper design for thermal dissipation around burden resistor and with a GND plane to dissipate heat</li>
+                </ul>
+                <div id="row">
+                    <div id="column">
+                        <img src="assets/project 4/PCB Top.png" alt="PCB Top View">
+                    </div>
+                    <div id="column">
+                        <img src="assets/project 4/PCB Bottom.png" alt="PCB Bottom View">
+                    </div>
+                </div>
+                <div id="row">
+                    <div id="column">
+                        <img src="assets/project 4/PCB 3D Top.png" alt="PCB Top 3D View">
+                    </div>
+                    <div id="column">
+                        <img src="assets/project 4/PCB 3D Bottom.png" alt="PCB Bottom 3D View">
+                    </div>
+                </div>
+            </p>
+
+            <p>
+                For more information on detailed design of the project, please continue reading.
+                <br><br>
                 <b><ins>LEM Models</ins></b>
                 <br><br>
                 To begin the project, the range of measured currents must first be sorted and picked out. I decided to use the IN series due to their low-noise, high-accuracy, packaging flexibilities, and client requirements. The transducers selected are as follows:
@@ -140,7 +174,7 @@
 
             <p>
                 <br>
-                <b><ins>Burden Resistor Selection</ins></b>
+                <b><ins>Burden Resistor & Gain Resistor Selection</ins></b>
                 <br><br>
                 Since the resistor is required to dissipate high power while having low temperature drift and low tolerance, VPG Foil Resistors were chosen for this project. 
                 The process of finding the perfect burden resistor involved a lot of iterative calculations between the gain required and power disspation, as well as days of scouring DigiKey for the right component.
@@ -208,7 +242,7 @@
                 </tr>
             </table>
 
-            <p>
+            <!--<p>
                 <b><ins>PCB Design</ins></b>
                 <br><br>
                 The PCB design can start now that the main component and their values are chosen. All schematics and PCB are routed and designed on Altium Designer. 
@@ -237,7 +271,7 @@
                         <img src="assets/project 4/PCB 3D Bottom.png" alt="PCB Bottom 3D View">
                     </div>
                 </div>
-            </p>
+            </p>-->
         </section>
     </main>
 

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!--head of the document-->
+<head>
+    <!--uses UTF-8 character encoding standard-->
+    <meta charset="UTF-8">
+    <!--adjusts width of webpage to device width-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--title of the webpage-->
+    <title>Vanessa Chu's Portfolio</title>
+    <!--link to css file-->
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+
+<!--main page body-->
+<body>
+    <!--header-->
+    <nav class="top_nav">
+        <a href="/index.html" target="_self">vc</a>
+        <nav class="bot_nav">
+            <a href="/index.html" target="_self">home</a>
+            <a href="/projects.html" target="_self">projects</a>
+            <a href="/about_me.html" target="_self">about me</a>
+            <a href="/contact.html" target="_self">contact</a>
+        </nav>
+    </nav>
+
+    <main>
+        <a class="project_a" href="/projects.html" target="_self">
+            <h1 class="project_title">projects</h1>
+        </a>
+        
+        <section class="project_section">
+            <h3 class="project_h3">Dot-Product-Based DNN Accelerator</h3>
+            <h4 class="project_h4">nov 2025 - dec 2025</h4>
+            <div class="project_skills">
+                <div class="box">
+                    <p>SystemVerilog</p>
+                </div>
+                <div class="box">
+                    <img src="/assets/skill icons/css-3.png" alt="CSS programming skill"/>
+                    <p>CSS</p>
+                </div>
+                <div class="skills_box">
+                    <img src="/assets/skill icons/python.png" alt="Python programming skill"/>
+                    <p>Python</p>
+                </div>
+                <div class="skills_box">
+                    <img src="/assets/skill icons/c-.png" alt="C++ programming skill"/>
+                    <p>C++</p>
+                </div>
+                <div class="skills_box">
+                    <img src="/assets/skill icons/c.png" alt="C programming skill"/>
+                    <p>C</p>
+                </div>
+                <div class="skills_box">
+                    <img src="/assets/skill icons/github-sign.png" alt="GitHub skill"/>
+                    <p>GitHub</p>
+                </div>
+            </div>
+
+            <p>
+                <br>
+                The Dot-Product-Based DNN Accelerator is a 4-element 16-bit fixed-point multiplier module with 5 pipelined stages and a dual-port memory subsystem to store 64 sequential 32-bit multiplier outputs. 
+                <br><br>
+                The project's RTL code was written in SystemVerilog, TCL scripts were used to synthesize the design on Cadence Genus to meet power and timing constraints, place-and-route (PNR) was performed on Cadence Innovus to reach area constraints, QuestaSim was used throughout the project to verify functionality of design with self-written testbenches.
+                <br><br>
+                At the end of the project, my design meets the following specifications:
+            </p>
+            
+            <ul>
+                <li>Meets clock frequency of 500MHz</li>
+                <li>5 pipelined stages that meets design trade-offs between timing and area</li>
+                <li>Final post-synthesis area: 17,443 &mu;m<sup>2</sup></li>
+                <li>Final post-layout area: 34,817 &mu;m<sup>2</sup> which is less than the 50,000 &mu;m<sup>2</sup> defined by project documentation</li>
+                <li>Post-layout setup timing slack of 403ps</li>
+            </ul>
+                
+            <p>
+                <br>
+                The high-level block diagram for the multiplier module can be seen here:
+                <img src="assets/project 5/High Level Block Diagram.png" alt="Block Diagram" style="width: 70%; height: 70%;">
+                For more information, the lab report details QuestaSim timing simulations and the GitHub repo contains source code.
+            </p>
+        </section>
+    </main>
+
+    <!--footer-->
+    <nav class="footer">
+        <!--<div id="contact_info"></div>-->
+        <div class="footer_title_div">
+            <h3 class="footer_titles">reach me</h3>
+            <h3 class="footer_titles">pages</h3>
+        </div>
+
+        <div class="footer_section">
+            <div id="links">
+                <!--replace "linkedin:" with icons maybe?-->
+                <!--<p>vanessa chu</p>-->
+                <a href="https://www.linkedin.com/in/vanessac3/" target="_blank">linkedin</a>
+                <a href="mailto:vanessa.chu333@gmail.com" target="_blank">email</a>
+                <p>(604) 506-3511</p>
+            </div>
+
+            <div id="links">
+                <a href="/index.html" target="_self">home</a>
+                <a href="/projects.html" target="_self">projects</a>
+                <a href="/about_me.html" target="_self">about me</a>
+                <a href="/contact.html" target="_self">contact</a>
+            </div>
+        </div>
+    </nav>
+</body>
