@@ -411,6 +411,29 @@ h2{
     width: 90%;
 }
 
+.project_skills{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.box{
+    display: inline-block; /* shrink to text width */
+    padding: 10px; /* space inside box instead of margin on <p> */
+    margin: 20px 10px;
+    background-color: rgba(79, 80, 100, 0.5);
+    border: 5px solid rgb(79,80,100);
+    border-radius: 10px;
+    text-align: center; /* center text horizontally */
+}
+
+.box p{
+    margin: 0;
+    white-space: nowrap;
+    display: inline-block;
+}
+
 /* about me page */
 .about_me_title{
     display: flex;
