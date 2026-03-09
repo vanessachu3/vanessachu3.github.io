@@ -419,8 +419,8 @@ h2{
 }
 
 .box{
-    display: inline-block; /* shrink to text width */
-    padding: 10px; /* space inside box instead of margin on <p> */
+    display: inline-block;
+    padding: 10px;
     margin: 20px 10px;
     background-color: rgba(79, 80, 100, 0.5);
     border: 5px solid rgb(79,80,100);
@@ -429,9 +429,11 @@ h2{
 }
 
 .box p{
+    width: 100%;
     margin: 0;
     white-space: nowrap;
     display: inline-block;
+    color: rgb(47, 48, 58);
 }
 
 /* about me page */
