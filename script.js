@@ -258,4 +258,37 @@
         animate();
     });
 
+    /* ── nav: scroll to the point where each section is fully revealed ── */
+
+    /* minimum progress value at which each scene's content is fully visible */
+    var navReveal = {
+        'proj-section':   { scene: sceneProjects, p: 0.08 },
+        'scene-about-me': { scene: sceneAboutMe,  p: 0.15 }
+    };
+
+    document.querySelectorAll('.bot_nav a').forEach(function (link) {
+        var href = link.getAttribute('href') || '';
+        if (href.charAt(0) !== '#') return;
+        var id = href.slice(1);
+
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            var info = navReveal[id];
+            var targetY;
+
+            if (info && info.scene) {
+                var scene      = info.scene;
+                var scrollable = scene.offsetHeight - window.innerHeight;
+                targetY = scrollable > 0
+                    ? scene.offsetTop + info.p * scrollable
+                    : scene.offsetTop;
+            } else {
+                var el = document.getElementById(id);
+                targetY = el ? el.offsetTop : 0;
+            }
+
+            window.scrollTo({ top: targetY, behavior: 'smooth' });
+        });
+    });
+
 })();
