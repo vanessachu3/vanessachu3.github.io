@@ -730,6 +730,34 @@ h2 {
     font-size: 600%;
 }
 
+.blurb {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.blurb img {
+    width: 350px;
+    height: 467px;
+    border-radius: 20px;
+}
+
+.blurb-text {
+    color: rgb(79,80,100);
+    border: 3px solid rgb(232,173,201);
+    border-radius: 20px;
+    background-color: rgb(232,173,201);
+    width: 40vw;
+    margin: 50px 30px;
+}
+
+.blurb-text p {
+    margin: 45px;
+    font-weight: 500;
+    font-size: large;
+}
+
 /* ── footer ──────────────────────────────────────────── */
 .footer {
     display: flex;
