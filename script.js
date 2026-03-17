@@ -42,11 +42,14 @@
 
     /* ── carousel (auto-play) ────────────────────────── */
 
-    var CARD_STEP = 270;   // px between center card and each flank
+    var CARD_STEP = 210;   // px between center card and each flank
+
+    function isPortrait() { return window.innerHeight > window.innerWidth; }
     var carIdx    = 0;
     var carTimer  = null;
 
     function setCarousel(idx) {
+        if (isPortrait()) return;   /* CSS handles portrait layout */
         var total = projectCards.length;
         projectCards.forEach(function (card, i) {
             var d = ((i - idx) % total + total) % total;
@@ -64,6 +67,7 @@
     }
 
     function startCarousel() {
+        if (isPortrait()) return;   /* no carousel on portrait */
         if (carTimer) return;
         carTimer = setInterval(function () {
             carIdx = (carIdx + 1) % projectCards.length;
@@ -74,6 +78,48 @@
     function stopCarousel() {
         clearInterval(carTimer);
         carTimer = null;
+    }
+
+    /* ── background music ────────────────────────────── */
+    var musicBtn    = document.getElementById('music-btn');
+    var bgMusic     = document.getElementById('bg-music');
+    var musicActive = false;
+
+    if (musicBtn && bgMusic) {
+        bgMusic.volume = 0.15;
+
+        function startMusic() {
+            bgMusic.currentTime = 0;
+            bgMusic.play().then(function () {
+                musicBtn.textContent = '♬';
+                musicActive = true;
+            }).catch(function (err) {
+                console.warn('Music play failed:', err);
+            });
+        }
+
+        /* auto-start on first scroll or click anywhere */
+        function onFirstInteraction() {
+            if (musicActive) return;
+            startMusic();
+            document.removeEventListener('scroll',     onFirstInteraction);
+            document.removeEventListener('pointerdown', onFirstInteraction);
+        }
+        document.addEventListener('scroll',      onFirstInteraction, { once: true, passive: true });
+        document.addEventListener('pointerdown', onFirstInteraction, { once: true });
+
+        /* button: stop + rewind when playing, restart from beginning when stopped */
+        musicBtn.addEventListener('click', function (e) {
+            e.stopPropagation();   /* don't let this click trigger onFirstInteraction */
+            if (musicActive) {
+                bgMusic.pause();
+                bgMusic.currentTime = 0;
+                musicBtn.textContent = '♪';
+                musicActive = false;
+            } else {
+                startMusic();
+            }
+        });
     }
 
     /* ── Gundam runners ──────────────────────────────── */
@@ -87,8 +133,7 @@
      * passes through them.
      */
 
-    var runnerL       = null;
-    var runnerCircles = [];   /* junction squares */
+    var runnerL = null;
 
     function buildRunners() {
         var NS  = 'http://www.w3.org/2000/svg';
@@ -106,85 +151,53 @@
         ].join(';');
 
         /*
-         * Geometry — single left-side runner starting under "vc" in the nav.
-         * lx  = spine x-position
-         * bw  = branch width (how far it extends right)
-         * bh  = branch height
-         * sw  = stroke-width (thick, like a real plastic sprue)
+         * lx=85 leaves room for branches in both directions.
+         * bw = branch width, and bh = branch height
+         * to give a randomised asymmetric plastic-sprue feel.
          */
-        var lx = 60, bw = 68, bh = 60, sw = '10';
-        var y1 = Math.round(vh * 0.2);
-        var y2 = Math.round(vh * 0.4);
-        var y3 = Math.round(vh * 0.6);
+        var lx = 70, bw = 60, bh = 80, sw = '10';
+        var y1 = Math.round(vh * 0.3);
+        var y2 = Math.round(vh * 0.5);
+        var y3 = Math.round(vh * 0.7);
         var stroke = 'rgba(232,173,201,0.98)';
 
-        /* ── main frame path ─────────────────────────────────── */
         var d = [
-            'M', lx, 70,
-            'L', lx, y1,
-            'L', lx + bw, y1,
-            'L', lx + bw, y1 + bh,
-            'L', lx, y1 + bh,
-            'L', lx, y2,
-            'L', lx + bw, y2,
-            'L', lx + bw, y2 + bh,
-            'L', lx, y2 + bh,
-            'L', lx, y3,
-            'L', lx + bw, y3,
-            'L', lx + bw, y3 + bh,
-            'L', lx, y3 + bh,
-            'L', lx, vh
+            'M',  lx, 70,
+            'L',  lx, y1,
+            'L',  lx + bw, y1,
+            'L',  lx + bw, y1 + bh,
+            'L',  lx, y1 + bh,
+            'L',  lx, y2,
+            'L',  lx + bw, y2,
+            'L',  lx + bw, y2 + bh,
+            'L',  lx, y2 + bh,
+            'L',  lx, y3,
+            'L',  lx + bw, y3,
+            'L',  lx + bw, y3 + bh,
+            'L',  lx, y3 + bh,
+            'L',  lx, vh
         ].join(' ');
 
         runnerL = document.createElementNS(NS, 'path');
-        runnerL.setAttribute('d', d);
-        runnerL.setAttribute('stroke', stroke);
-        runnerL.setAttribute('stroke-width', sw);
-        runnerL.setAttribute('fill', 'none');
-        runnerL.setAttribute('stroke-linecap', 'round');
+        runnerL.setAttribute('d',               d);
+        runnerL.setAttribute('stroke',          stroke);
+        runnerL.setAttribute('stroke-width',    sw);
+        runnerL.setAttribute('fill',            'none');
+        runnerL.setAttribute('stroke-linecap',  'round');
         runnerL.setAttribute('stroke-linejoin', 'round');
         svg.appendChild(runnerL);
 
-        /* ── junction squares at every branch corner ─────────── */
-        /*var junctionPts = [
-            [lx,      y1],       [lx + bw, y1],
-            [lx + bw, y1 + bh],  [lx,      y1 + bh],
-            [lx,      y2],       [lx + bw, y2],
-            [lx + bw, y2 + bh],  [lx,      y2 + bh]
-        ];*/
-
-        /*runnerCircles = [];
-        junctionPts.forEach(function (pt) {
-            var r = document.createElementNS(NS, 'circle');
-            r.setAttribute('cx',      pt[0]);
-            r.setAttribute('cy',      pt[1]);
-            r.setAttribute('r',       '8');
-            r.setAttribute('fill',    stroke);
-            r.setAttribute('opacity', '0');
-            svg.appendChild(r);
-            runnerCircles.push({ el: r, yFrac: pt[1] / vh });
-        });*/
-
         document.body.appendChild(svg);
 
-        /* dasharray must be initialised after the element is in the DOM */
         var len = runnerL.getTotalLength();
-        runnerL.setAttribute('stroke-dasharray', len);
+        runnerL.setAttribute('stroke-dasharray',  len);
         runnerL.setAttribute('stroke-dashoffset', len);
     }
 
     function updateRunners(scrollProg) {
         if (!runnerL) return;
-
-        /* reveal the main stroke from top to bottom */
         var len = parseFloat(runnerL.getAttribute('stroke-dasharray'));
         runnerL.setAttribute('stroke-dashoffset', len * (1 - scrollProg));
-
-        /* junction squares */
-        /*runnerCircles.forEach(function (item) {
-            item.el.setAttribute('opacity',
-                norm(scrollProg, item.yFrac - 0.025, item.yFrac + 0.025));
-        });*/
     }
 
     /* ── main animation loop ─────────────────────────── */
@@ -212,32 +225,36 @@
             else          stopCarousel();
         }
 
-        /* 3 ── Skills: section fade + staggered box reveal */
+        /* 3 ── Skills: section fade in + staggered box reveal + fade out */
         if (sceneSkills && skillsSection) {
             var p = getProgress(sceneSkills);
-            skillsSection.style.opacity = norm(p, 0, 0.12);
+            var sectionOp;
+            if      (p < 0.10) sectionOp = norm(p, 0, 0.10);
+            else if (p > 0.90) sectionOp = 1 - norm(p, 0.90, 1.0);
+            else               sectionOp = 1;
+            skillsSection.style.opacity = sectionOp;
 
             var n = skillBoxes.length;
             skillBoxes.forEach(function (box, i) {
-                var start = 0.12 + (i / n) * 0.73;
-                var end   = start + 0.73 / n;
+                var start = 0.10 + (i / n) * 0.65;
+                var end   = start + 0.65 / n;
                 var bop   = norm(p, start, end);
                 box.style.opacity   = bop;
                 box.style.transform = 'translateY(' + (1 - bop) * 28 + 'px)';
             });
         }
 
-        /* 4 ── About me: fade in */
+        /* 4 ── About me: fade in only, stays visible at end of page */
         if (sceneAboutMe && aboutMeSection) {
             var p  = getProgress(sceneAboutMe);
-            var op = norm(p, 0, 0.15);
+            var op = norm(p, 0, 0.45);
             aboutMeSection.style.opacity   = op;
             aboutMeSection.style.transform = 'translateY(' + (1 - op) * 40 + 'px)';
         }
 
         /* 5 ── Runners: reveal proportional to total page scroll */
         var maxScroll = Math.max(1, document.body.scrollHeight - window.innerHeight);
-        updateRunners(window.scrollY / maxScroll);
+        updateRunners(Math.min(1, window.scrollY / maxScroll));
     }
 
     /* ── init ────────────────────────────────────────── */
@@ -253,7 +270,6 @@
         var old = document.getElementById('runners-svg');
         if (old) old.remove();
         runnerL = null;
-        runnerCircles = [];
         buildRunners();
         animate();
     });
@@ -262,8 +278,9 @@
 
     /* minimum progress value at which each scene's content is fully visible */
     var navReveal = {
-        'proj-section':   { scene: sceneProjects, p: 0.08 },
-        'scene-about-me': { scene: sceneAboutMe,  p: 0.15 }
+        'scene-projects':   { scene: sceneProjects, p: 0.08 },
+        'scene-skills':   { scene: sceneSkills, p: 0.8 },
+        'scene-about-me': { scene: sceneAboutMe,  p: 0.45 }
     };
 
     document.querySelectorAll('.bot_nav a').forEach(function (link) {
@@ -291,4 +308,202 @@
         });
     });
 
+    /* ── project page: hide nav when project title scrolls past it ── */
+    var projectTitle = document.querySelector('.project_title');
+    if (projectTitle) {
+        var topNav = document.querySelector('.top_nav');
+        window.addEventListener('scroll', function () {
+            var titleBottom = projectTitle.getBoundingClientRect().bottom;
+            var navBottom   = topNav.getBoundingClientRect().bottom;
+            topNav.classList.toggle('nav-hidden', titleBottom <= navBottom);
+        }, { passive: true });
+    }
+
 })();
+
+/*
+/* ── puzzle piece game ───────────────────────────────────────────────── 
+(function () {
+    'use strict';
+
+    /* ── config ─────────────────────────────────────────────────────── 
+    var TOTAL_PIECES = 4;
+    var YT_VIDEO_ID  = 'YOUR_VIDEO_ID';   /* ← replace with your YouTube video ID 
+
+    /*
+     * 6 predefined viewport positions [vx%, vy%].
+     * 4 are randomly chosen each page load.
+     * Keep them away from the nav (top 10%) and backpack corner (bottom-right).
+     
+    var SLOTS = [
+        [8,  26], [82, 22],
+        [5,  52], [88, 50],
+        [12, 76], [74, 72]
+    ];
+
+    /* ── DOM refs ────────────────────────────────────────────────────── 
+    var container    = document.getElementById('puzzle-pieces-container');
+    var backpackBtn  = document.getElementById('backpack-btn');
+    var badge        = document.getElementById('backpack-badge');
+    var videoOverlay = document.getElementById('video-overlay');
+    var ytPlayer     = document.getElementById('yt-player');
+    var videoClose   = document.getElementById('video-close');
+    var asmPieces    = Array.from(document.querySelectorAll('.asm-piece'));
+    var asmDiv       = document.getElementById('puzzle-assembly');
+
+    if (!container || !backpackBtn) return;   /* game HTML not present */
+
+    /* ── pick random slots ───────────────────────────────────────────── 
+    var chosen = SLOTS.slice()
+        .sort(function () { return Math.random() - 0.5; })
+        .slice(0, TOTAL_PIECES);
+
+    var collected = 0;
+
+    /* ── spawn pieces ────────────────────────────────────────────────── 
+    chosen.forEach(function (pos, idx) {
+        var el = document.createElement('div');
+        el.className = 'puzzle-piece';
+        el.textContent = '🧩';
+        el.style.left             = pos[0] + 'vw';
+        el.style.top              = pos[1] + 'vh';
+        el.style.animationDelay   = (idx * 0.7) + 's';
+        el.addEventListener('click', function () { collectPiece(el); });
+        container.appendChild(el);
+    });
+
+    /* ── collect a piece ─────────────────────────────────────────────── 
+    function collectPiece(el) {
+        if (el.dataset.collected) return;
+        el.dataset.collected = '1';
+
+        var rect    = el.getBoundingClientRect();
+        var originX = rect.left + rect.width  / 2;
+        var originY = rect.top  + rect.height / 2;
+
+        /* pop animation then remove 
+        el.style.animation = 'piece-pop 0.4s ease forwards';
+        setTimeout(function () { el.remove(); }, 420);
+
+        /* fire sparkle trail → on arrival update counter 
+        fireTrail(originX, originY, function () {
+            collected++;
+            badge.textContent = collected;
+
+            /* badge bump 
+            badge.style.animation = 'none';
+            requestAnimationFrame(function () {
+                requestAnimationFrame(function () {
+                    badge.style.animation = 'badge-bump 0.35s ease';
+                });
+            });
+
+            if (collected >= TOTAL_PIECES) {
+                backpackBtn.classList.add('complete');
+            }
+        });
+    }
+
+    /* ── sparkle trail ───────────────────────────────────────────────── 
+    function fireTrail(fromX, fromY, onArrival) {
+        var bpRect = backpackBtn.getBoundingClientRect();
+        var toX    = bpRect.left + bpRect.width  / 2;
+        var toY    = bpRect.top  + bpRect.height / 2;
+        var COUNT  = 10;
+        var done   = 0;
+
+        for (var i = 0; i < COUNT; i++) {
+            (function (idx) {
+                setTimeout(function () {
+                    var s = document.createElement('div');
+                    s.className = 'trail-sparkle';
+
+                    /* small random scatter around origin 
+                    var ox = fromX + (Math.random() - 0.5) * 22;
+                    var oy = fromY + (Math.random() - 0.5) * 22;
+                    s.style.left = ox + 'px';
+                    s.style.top  = oy + 'px';
+                    document.body.appendChild(s);
+
+                    requestAnimationFrame(function () {
+                        requestAnimationFrame(function () {
+                            s.style.transition = 'left 0.55s ease-in, top 0.55s ease-in, opacity 0.55s ease';
+                            s.style.left    = toX + 'px';
+                            s.style.top     = toY + 'px';
+                            s.style.opacity = '0';
+                        });
+                    });
+
+                    setTimeout(function () {
+                        s.remove();
+                        done++;
+                        if (done === COUNT) onArrival();
+                    }, 600);
+                }, idx * 45);
+            })(i);
+        }
+    }
+
+    /* ── open backpack ───────────────────────────────────────────────── 
+    backpackBtn.addEventListener('click', function () {
+        if (collected < TOTAL_PIECES) return;
+        playAssembly();
+    });
+
+    /* ── puzzle assembly animation → video ──────────────────────────── 
+    function playAssembly() {
+        /* reset assembly pieces 
+        asmDiv.style.display = 'flex';
+        asmPieces.forEach(function (p) {
+            p.style.transition = 'none';
+            p.style.opacity    = '0';
+            p.style.transform  = 'translateY(-60px) scale(0.5)';
+        });
+
+        videoOverlay.classList.add('active');
+
+        /* stagger pieces flying down into view 
+        asmPieces.forEach(function (p, i) {
+            setTimeout(function () {
+                p.style.transition = 'transform 0.5s cubic-bezier(0.34,1.56,0.64,1), opacity 0.4s ease';
+                p.style.opacity    = '1';
+                p.style.transform  = 'translateY(0) scale(1)';
+            }, 200 + i * 180);
+        });
+
+        /* after all pieces land → click together → fade to video 
+        var landTime = 200 + asmPieces.length * 180 + 400;
+        setTimeout(function () {
+            /* click together 
+            asmPieces.forEach(function (p) {
+                p.style.transition = 'transform 0.2s ease, opacity 0.2s ease';
+                p.style.transform  = 'scale(1.2)';
+            });
+            setTimeout(function () {
+                asmPieces.forEach(function (p) {
+                    p.style.transform = 'scale(0)';
+                    p.style.opacity   = '0';
+                });
+                /* show video after pieces disappear 
+                setTimeout(function () {
+                    asmDiv.style.display = 'none';
+                    ytPlayer.src = 'https://www.youtube.com/embed/' + YT_VIDEO_ID + '?autoplay=1';
+                    ytPlayer.classList.add('visible');
+                }, 250);
+            }, 220);
+        }, landTime);
+    }
+
+    /* ── close video ─────────────────────────────────────────────────── 
+    videoClose.addEventListener('click', closeVideo);
+    videoOverlay.addEventListener('click', function (e) {
+        if (e.target === videoOverlay) closeVideo();
+    });
+
+    function closeVideo() {
+        videoOverlay.classList.remove('active');
+        ytPlayer.src = 'about:blank';
+        ytPlayer.classList.remove('visible');
+    }
+
+})();*/

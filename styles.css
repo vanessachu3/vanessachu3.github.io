@@ -40,6 +40,7 @@ body {
     justify-content: space-between;
     align-items: center;
     position: sticky;
+    transition: transform 0.35s ease;
     top: 10px;
     left: 0;
     width: 98%;
@@ -49,6 +50,9 @@ body {
     background-color: rgb(232,173,201);
     z-index: 100;
     border-radius: 15px;
+}
+.top_nav.nav-hidden {
+    transform: translateY(calc(-100% - 20px));
 }
 
 .top_nav a {
@@ -66,6 +70,24 @@ body {
     padding-left: 20px;
 }
 
+#music-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: large;
+    font-weight: 600;
+    color: rgb(52,56,65);
+    padding: 0px 20px;
+    font-family: inherit;
+    vertical-align: middle;
+    width: 30px;
+    margin: auto;
+}
+
+#music-btn:hover {
+    color: rgb(250,230,241);
+}
+
 /* ── scroll-scene system ─────────────────────────────── */
 /*
  * Each .scroll-scene is tall (multiple viewport heights).
@@ -77,10 +99,10 @@ body {
     position: relative;
 }
 
-#scene-title    { height: 120vh; }
-#scene-projects { height: 280vh; }
-#scene-skills   { height: 220vh; }
-#scene-about-me { height: 200vh; }
+#scene-title    { height: 140vh; }
+#scene-projects { height: 200vh; }
+#scene-skills   { height: 150vh; }
+#scene-about-me { height: 130vh; }
 
 .scene-content {
     position: sticky;
@@ -111,11 +133,12 @@ body {
 h1 {
     white-space: nowrap;
     margin: 0;
+    line-height: 1;
     align-items: center;
     font-family: "Franxurter Fat", sans-serif;
     color: rgb(232,173,201);
     font-weight: 100;
-    font-size: clamp(7rem, 10vw, 17rem);
+    font-size: clamp(2.5rem, 10vw, 17rem);
 }
 
 #adjust_v {
@@ -123,7 +146,7 @@ h1 {
 }
 
 #beneath_name {
-    width: 500px;
+    width: min(500px, 90vw);
     border: 3px solid rgb(250,230,241);
 }
 
@@ -131,425 +154,156 @@ h1 {
     margin-top: 0;
     margin-bottom: 0;
     font-weight: 800;
-    font-size: x-large;
+    font-size: clamp(0.9rem, 3vw, 1.5rem);
     color: rgb(232,173,201);
 }
 
 /* ── title hover image (tftacademy-style) ────────────── */
 /*
- * .gundam-clip is a fixed-size window that sits just above the
- * CHU cap-letters.  overflow:hidden clips everything below its
- * bottom edge, so only the gundam's head/upper body peeks out
- * above the text — like frodan on tftacademy.com.
- *
- * z-index:-1 puts the whole window behind the CHU text.
- * The hover transition is on the clip window, not the image itself.
+ * .name-hover carries font-size: clamp(...) so all child em units
+ * scale with the text on every screen size.
+ * overflow:hidden on .gundam-clip keeps only the gundam top visible
+ * above CHU (peek effect). All other clips use overflow:visible.
  */
 .name-hover {
+    display: block;
     position: relative;
+    width: max-content;
+    max-width: 95vw;
+    margin: 0 auto;
     cursor: default;
+    /* all child em units are relative to this, matching h1 size */
+    font-size: clamp(2.5rem, 10vw, 17rem);
 }
 
-.gundam-clip {
-    position: absolute;
-    /* bottom: ~80% of the span's height ≈ just above the cap letters */
-    bottom: -55px;
-    left: 240px;
-    width: 300px;
-    height: 250px;        /* how much gundam head is revealed */
-    overflow: hidden;
-    z-index: -1;          /* sits behind the CHU letters */
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.5s ease;
+/* override h1 inside name-hover to inherit the clamp em */
+.name-hover h1 {
+    font-size: 1em;
+    line-height: 1;
 }
 
-.yarn-clip {
-    position: absolute;
-    /* bottom: ~80% of the span's height ≈ just above the cap letters */
-    bottom: -20px;
-    right: 300px;
-    width: 220px;
-    height: 175px;        /* how much gundam head is revealed */
-    overflow: hidden;
-    z-index: -1;          /* sits behind the CHU letters */
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-}
-
-.books-clip {
-    position: absolute;
-    /* bottom: ~80% of the span's height ≈ just above the cap letters */
-    bottom: -100px;
-    right: 110px;
-    width: 160px;
-    height: 200px;        /* how much gundam head is revealed */
-    overflow: hidden;
-    z-index: -1;          /* sits behind the CHU letters */
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-}
-
-.choncc-clip {
-    position: absolute;
-    /* bottom: ~80% of the span's height ≈ just above the cap letters */
-    bottom: -50px;
-    left: 70px;
-    width: 180px;
-    height: 200px;        /* how much gundam head is revealed */
-    overflow: hidden;
-    z-index: -1;          /* sits behind the CHU letters */
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-}
-
-.coding-clip {
-    position: absolute;
-    /* bottom: ~80% of the span's height ≈ just above the cap letters */
-    bottom: -120px;
-    left: 470px;
-    width: 250px;
-    height: 250px;        /* how much gundam head is revealed */
-    overflow: hidden;
-    z-index: -1;          /* sits behind the CHU letters */
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-}
-
-.baking-clip {
-    position: absolute;
-    /* bottom: ~80% of the span's height ≈ just above the cap letters */
-    bottom: -30px;
-    right: -90px;
-    width: 250px;
-    height: 250px;        /* how much gundam head is revealed */
-    overflow: hidden;
-    z-index: -1;          /* sits behind the CHU letters */
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-}
-
-.db-clip {
-    position: absolute;
-    /* bottom: ~80% of the span's height ≈ just above the cap letters */
-    bottom: -150px;
-    right: 480px;
-    width: 250px;
-    height: 250px;        /* how much gundam head is revealed */
-    overflow: hidden;
-    z-index: -1;          /* sits behind the CHU letters */
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-}
-
-.sparkles-clip1 {
-    position: absolute;
-    /* bottom: ~80% of the span's height ≈ just above the cap letters */
-    bottom: -240px;
-    right: 490px;
-    width: 250px;
-    height: 250px;        /* how much gundam head is revealed */
-    overflow: hidden;
-    z-index: -1;          /* sits behind the CHU letters */
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-}
-
-.sparkles-clip2 {
-    position: absolute;
-    /* bottom: ~80% of the span's height ≈ just above the cap letters */
-    bottom: -45px;
-    right: 450px;
-    width: 250px;
-    height: 250px;        /* how much gundam head is revealed */
-    overflow: hidden;
-    z-index: -1;          /* sits behind the CHU letters */
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-}
-
-.sparkles-clip3 {
-    position: absolute;
-    /* bottom: ~80% of the span's height ≈ just above the cap letters */
-    bottom: -25px;
-    right: 30px;
-    width: 250px;
-    height: 250px;        /* how much gundam head is revealed */
-    overflow: hidden;
-    z-index: -1;          /* sits behind the CHU letters */
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-}
-
-.sparkles-clip4 {
-    position: absolute;
-    /* bottom: ~80% of the span's height ≈ just above the cap letters */
-    bottom: -0px;
-    left: 30px;
-    width: 250px;
-    height: 250px;        /* how much gundam head is revealed */
-    overflow: hidden;
-    z-index: -1;          /* sits behind the CHU letters */
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-}
-
-.sparkles-clip5 {
-    position: absolute;
-    /* bottom: ~80% of the span's height ≈ just above the cap letters */
-    bottom: -50px;
-    left: 300px;
-    width: 250px;
-    height: 250px;        /* how much gundam head is revealed */
-    overflow: hidden;
-    z-index: -1;          /* sits behind the CHU letters */
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-}
-
-.sparkles-clip6 {
-    position: absolute;
-    /* bottom: ~80% of the span's height ≈ just above the cap letters */
-    bottom: -250px;
-    left: 400px;
-    width: 250px;
-    height: 250px;        /* how much gundam head is revealed */
-    overflow: hidden;
-    z-index: -1;          /* sits behind the CHU letters */
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-}
-
+/* ── shared defaults for all clip windows ─────────── */
+.gundam-clip,
+.yarn-clip,
+.books-clip,
+.choncc-clip,
+.coding-clip,
+.baking-clip,
+.db-clip,
+.sparkles-clip1,
+.sparkles-clip2,
+.sparkles-clip3,
+.sparkles-clip4,
+.sparkles-clip5,
+.sparkles-clip6,
 .sparkles-clip7 {
     position: absolute;
-    /* bottom: ~80% of the span's height ≈ just above the cap letters */
-    bottom: -25px;
-    right: 200px;
-    width: 250px;
-    height: 250px;        /* how much gundam head is revealed */
-    overflow: hidden;
-    z-index: -1;          /* sits behind the CHU letters */
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.5s ease;
+    z-index: -1;
 }
 
-.name-hover:hover .gundam-clip {
-    opacity: 1;
-    transform: translateY(0);
-}
+/* ── individual clip positions (em = h1 font-size) ── */
+/* dragon boat — far left, at text level */
+.db-clip       { left: -1.1em; bottom: -0.5em; width: 0.9em; height: 2.0em; overflow: visible; }
+/* yarn bowl — above left portion of VANESSA */
+.yarn-clip     { left:  0.1em; bottom:  0.1em; width: 1.4em; height: 1.8em; overflow: visible; }
+/* books — above AN */
+.books-clip    { left:  1.5em; bottom:  -0.1em; width: 1.2em; height: 1.8em; overflow: visible; }
+/* baking bowl — above ESS */
+.baking-clip   { left:  2.4em; bottom:  0.2em; width: 1.5em; height: 1.8em; overflow: visible; }
+/* choncc — above A / space */
+.choncc-clip   { left:  3.4em; bottom:  0.1em; width: 1.4em; height: 1.8em; overflow: visible; }
+/* gundam — above CHU, peek effect (clipped) */
+.gundam-clip   { right:  -0.6em; bottom: 0.1em; width: 1.9em; height: 2.0em; overflow: hidden;  }
+/* coding laptop — right of U */
+.coding-clip   { right: -1.7em; bottom: -0.3em; width: 1.5em; height: 2.0em; overflow: visible; }
+/* sparkles — scattered */
+.sparkles-clip1 { left:  -0.25em; bottom: -0.01em; width: 0.5em; height: 0.5em; overflow: visible; }
+.sparkles-clip2 { left:  3.5em; bottom: 1.5em; width: 0.5em; height: 0.5em; overflow: visible; }
+.sparkles-clip3 { left: 5.4em; bottom: 1.2em; width: 0.5em; height: 0.5em; overflow: visible; }
+.sparkles-clip4 { left: -0.1em; bottom: 1.3em; width: 0.5em; height: 0.5em; overflow: visible; }
+.sparkles-clip5 { left:  1.3em; bottom: 1.5em; width: 0.5em; height: 0.5em; overflow: visible; }
+.sparkles-clip6 { left:  2.3em; bottom: 1.5em; width: 0.5em; height: 0.5em; overflow: visible; }
+.sparkles-clip7 { left: 5.7em; bottom: 0.0em; width: 0.5em; height: 0.5em; overflow: visible; }
 
-.name-hover:hover .yarn-clip {
-    opacity: 1;
-    transform: translateY(0);
-}
+/* ── hover: reveal all clips ──────────────────────── */
+.name-hover:hover .gundam-clip,
+.name-hover:hover .yarn-clip,
+.name-hover:hover .books-clip,
+.name-hover:hover .choncc-clip,
+.name-hover:hover .coding-clip,
+.name-hover:hover .baking-clip,
+.name-hover:hover .db-clip,
+.name-hover:hover .sparkles-clip1,
+.name-hover:hover .sparkles-clip2,
+.name-hover:hover .sparkles-clip3,
+.name-hover:hover .sparkles-clip4,
+.name-hover:hover .sparkles-clip5,
+.name-hover:hover .sparkles-clip6,
+.name-hover:hover .sparkles-clip7 { opacity: 1; }
 
-.name-hover:hover .books-clip {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.name-hover:hover .choncc-clip {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.name-hover:hover .coding-clip {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.name-hover:hover .baking-clip {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.name-hover:hover .db-clip {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.name-hover:hover .sparkles-clip1 {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.name-hover:hover .sparkles-clip2 {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.name-hover:hover .sparkles-clip3 {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.name-hover:hover .sparkles-clip4 {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.name-hover:hover .sparkles-clip5 {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.name-hover:hover .sparkles-clip6 {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.name-hover:hover .sparkles-clip7 {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* The image fills the clip window from the top.
-   overflow:hidden on the parent clips the bottom away,
-   leaving only the gundam's head visible above CHU. */
+/* ── clip images (em = h1 font-size) ──────────────── */
 .gundam-img {
     position: absolute;
-    left: 0;
-    width: 280px;
-    height: auto;
-    /*transform: rotate(10deg);   /* clockwise — tilted the other way */
-    transform-origin: top center;
+    top: 0; left: 0;
+    width: 1.5em; height: auto;
 }
-
 .yarn-img {
     position: absolute;
-    left: 0;
-    width: 200px;
-    height: auto;
-    transform: rotate(-15deg);   /* clockwise — tilted the other way */
+    top: 0; left: 0;
+    width: 1.1em; height: auto;
+    transform: rotate(-15deg);
     transform-origin: top center;
 }
-
 .books-img {
     position: absolute;
-    left: 0;
-    width: 140px;
-    height: auto;
-    transform-origin: top center;
+    top: 0; left: 0;
+    width: 0.9em; height: auto;
 }
-
 .choncc-img {
     position: absolute;
-    left: 0;
-    width: 200px;
-    height: auto;
-    transform-origin: top center;
+    top: 0; left: 0;
+    width: 1.1em; height: auto;
 }
-
 .coding-img {
     position: absolute;
-    top: 50px;
-    left: 50px;
-    width: 200px;
-    height: auto;
+    top: 0; left: 0;
+    width: 1.1em; height: auto;
     transform: rotate(40deg);
-    transform-origin: top center;
+    transform-origin: top left;
 }
-
 .baking-img {
     position: absolute;
-    top: 50px;
-    left: 50px;
-    width: 200px;
-    height: auto;
-    transform-origin: top center;
+    top: 0; left: 0;
+    width: 1.1em; height: auto;
 }
-
 .db-img {
     position: absolute;
-    top: 80px;
-    right: 50px;
-    width: 200px;
-    height: auto;
+    top: 0; left: 0;
+    width: 1.1em; height: auto;
     transform: rotate(-45deg);
-    transform-origin: top center;
+    transform-origin: top right;
 }
-
-.sparkles-img1 {
-    position: absolute;
-    top: 80px;
-    right: 50px;
-    width: 40px;
-    height: auto;
-    transform: rotate(-20deg);
-    transform-origin: top center;
-}
-
-.sparkles-img2 {
-    position: absolute;
-    top: 80px;
-    right: 50px;
-    width: 40px;
-    height: auto;
-    transform: rotate(-10deg);
-    transform-origin: top center;
-}
-
-.sparkles-img3 {
-    position: absolute;
-    top: 80px;
-    right: 50px;
-    width: 40px;
-    height: auto;
-    transform-origin: top center;
-}
-
-.sparkles-img4 {
-    position: absolute;
-    top: 80px;
-    right: 50px;
-    width: 40px;
-    height: auto;
-    transform: rotate(-30deg);
-    transform-origin: top center;
-}
-
-.sparkles-img5 {
-    position: absolute;
-    top: 80px;
-    right: 50px;
-    width: 40px;
-    height: auto;
-    transform: rotate(30deg);
-    transform-origin: top center;
-}
-
-.sparkles-img6 {
-    position: absolute;
-    top: 80px;
-    right: 50px;
-    width: 40px;
-    height: auto;
-    transform: rotate(20deg);
-    transform-origin: top center;
-}
-
+.sparkles-img1,
+.sparkles-img2,
+.sparkles-img3,
+.sparkles-img4,
+.sparkles-img5,
+.sparkles-img6,
 .sparkles-img7 {
     position: absolute;
-    top: 80px;
-    right: 50px;
-    width: 40px;
-    height: auto;
-    transform: rotate(60deg);
-    transform-origin: top center;
+    top: 0; left: 0;
+    width: 0.25em; height: auto;
 }
+.sparkles-img1 { transform: rotate(-20deg); }
+.sparkles-img2 { transform: rotate(10deg);  }
+.sparkles-img3 { transform: rotate(0deg);   }
+.sparkles-img4 { transform: rotate(-30deg); }
+.sparkles-img5 { transform: rotate(30deg);  }
+.sparkles-img6 { transform: rotate(-10deg); }
+.sparkles-img7 { transform: rotate(20deg);  }
 
 /* ── projects section ────────────────────────────────── */
 .project_cards {
@@ -569,7 +323,7 @@ h1 {
     position: relative;
     width: 800px;
     flex-shrink: 0;
-    height: 360px;
+    height: 380px;
     overflow: hidden;   /* prevents cards from bleeding over the h2 title */
 }
 
@@ -680,7 +434,8 @@ h2 {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    width: 90vw;
+    width: 50vw;
+    height: auto;
     margin: 10px auto;
     flex-wrap: wrap;
 }
@@ -691,7 +446,7 @@ h2 {
     justify-content: center;
     align-items: center;
     width: auto;
-    height: auto;
+    height: 80px;
     margin: 6px 10px;
     border: 5px solid rgb(232,173,201);
     border-radius: 10px;
@@ -702,12 +457,18 @@ h2 {
 
 .skills_box img {
     width: 50px;
-    height: auto;
+    height: 50px;
     margin: 10px;
 }
 
 .skills_box p {
     margin-right: 10px;
+    font-weight: 900;
+    color: rgb(232,173,201);
+}
+
+.skills-text {
+    margin: 10px;
     font-weight: 900;
     color: rgb(232,173,201);
 }
@@ -737,10 +498,47 @@ h2 {
     justify-content: center;
 }
 
-.blurb img {
-    width: 350px;
-    height: 467px;
+.blurb-contact {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#me {
+    width: 335px;
+    height: 447px;
     border-radius: 20px;
+    display: block;
+    margin-bottom: 20px;
+}
+
+.blurb-links {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(232,173,201);
+    border: 5px solid rgb(232,173,201);
+    border-radius: 20px;
+    width: 350px;
+}
+
+#contact {
+    width: 25px;
+    height: 25px;
+    margin: 5px;
+    filter: grayscale(50%);
+}
+
+.blurb-links a {
+    display: flex;
+    flex-direction: row;
+    color: rgb(79,80,100);
+    text-decoration: none;
+    align-items: center;
+    justify-content: center;
+    margin: 0px;
 }
 
 .blurb-text {
@@ -753,7 +551,7 @@ h2 {
 }
 
 .blurb-text p {
-    margin: 45px;
+    margin: 35px;
     font-weight: 500;
     font-size: large;
 }
@@ -928,7 +726,7 @@ h2 {
     display: inline-block;
     padding: 10px;
     margin: 20px 10px;
-    background-color: rgba(79, 80, 100, 0.5);
+    background-color: rgba(117, 118, 129, 0.5);
     border: 5px solid rgb(79,80,100);
     border-radius: 10px;
     text-align: center;
@@ -965,3 +763,224 @@ h2 {
 .contact_a {
     text-decoration: none;
 }
+
+/* ── portrait / mobile responsive overrides ──────────── */
+
+/* Project section: vertical stack on portrait screens */
+@media (orientation: portrait) {
+    .project_cards {
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+        overflow-y: auto;
+        padding: 10px;
+    }
+    #projects {
+        font-size: min(12vw, 3rem);
+        width: auto;
+        margin-bottom: 10px;
+    }
+    .card_container {
+        width: min(90vw, 400px);
+        height: auto;
+        overflow: visible;
+        position: relative;
+    }
+    .project_href {
+        position: relative !important;
+        left: auto !important;
+        top: auto !important;
+        margin: 8px auto !important;
+        transform: none !important;
+        opacity: 1 !important;
+        display: block;
+    }
+    .card {
+        width: min(280px, 80vw);
+        height: auto;
+        min-height: 220px;
+    }
+    /* About me: stack photo above text */
+    .blurb {
+        flex-direction: column;
+        align-items: center;
+    }
+    .blurb img {
+        width: min(200px, 60vw);
+        height: auto;
+    }
+    .blurb-text {
+        width: min(85vw, 500px);
+        margin: 20px 10px;
+    }
+    /* Footer */
+    .footer_title_div {
+        width: 90vw;
+    }
+    .footer_section {
+        width: 90vw;
+    }
+    #links {
+        width: auto;
+        margin: 0 20px;
+    }
+    /* hide runner SVG on portrait/mobile */
+    #runners-svg { display: none; }
+    /* keep project title visible while scrolling through cards */
+    #projects {
+        position: sticky;
+        top: 80px;
+        z-index: 10;
+    }
+}
+
+/* Skills: already flex-wrap, just ensure box sizing scales */
+@media (max-width: 480px) {
+    .skills_box img {
+        width: 36px;
+    }
+    #skills_title {
+        font-size: 16vw;
+    }
+}
+
+/*
+/* ── puzzle piece game ───────────────────────────────── 
+.puzzle-piece {
+    position: fixed;
+    font-size: 2rem;
+    cursor: pointer;
+    z-index: 500;
+    user-select: none;
+    animation: piece-float 3s ease-in-out infinite;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3));
+    transition: transform 0.15s ease;
+}
+.puzzle-piece:hover { transform: scale(1.25); }
+
+@keyframes piece-float {
+    0%, 100% { translate: 0 0; }
+    50%       { translate: 0 -8px; }
+}
+
+@keyframes piece-pop {
+    0%   { transform: scale(1);   opacity: 1; }
+    45%  { transform: scale(1.6); opacity: 0.8; }
+    100% { transform: scale(0);   opacity: 0; }
+}
+
+.trail-sparkle {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgb(232,173,201);
+    pointer-events: none;
+    z-index: 9000;
+}
+
+#backpack-btn {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    font-size: 2.4rem;
+    cursor: pointer;
+    z-index: 600;
+    user-select: none;
+    line-height: 1;
+    transition: transform 0.2s ease;
+}
+#backpack-btn:hover { transform: scale(1.1); }
+
+#backpack-badge {
+    position: absolute;
+    top: -4px;
+    right: -6px;
+    background: rgb(232,173,201);
+    color: rgb(52,56,65);
+    font-size: 11px;
+    font-weight: 900;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Nata Sans", sans-serif;
+}
+
+@keyframes badge-bump {
+    0%, 100% { transform: scale(1);   }
+    50%       { transform: scale(1.5); }
+}
+
+@keyframes backpack-pulse {
+    0%, 100% { filter: drop-shadow(0 0 0px   rgba(232,173,201,0));   transform: scale(1);    }
+    50%       { filter: drop-shadow(0 0 14px  rgba(232,173,201,0.9)); transform: scale(1.07); }
+}
+#backpack-btn.complete { animation: backpack-pulse 1.6s ease-in-out infinite; }
+
+/* video overlay 
+#video-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(52,56,65,0.92);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+}
+#video-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+#video-container {
+    position: relative;
+    width: min(90vw, 820px);
+    aspect-ratio: 16/9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#yt-player {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    opacity: 0;
+    border-radius: 10px;
+    transition: opacity 0.4s ease 0.1s;
+}
+#yt-player.visible { opacity: 1; }
+
+#video-close {
+    position: absolute;
+    top: -46px;
+    right: 0;
+    background: none;
+    border: none;
+    color: rgb(250,230,241);
+    font-size: 1.6rem;
+    cursor: pointer;
+    font-family: inherit;
+}
+#video-close:hover { color: white; }
+
+/* puzzle assembly animation 
+#puzzle-assembly {
+    display: flex;
+    gap: 24px;
+    z-index: 1;
+    pointer-events: none;
+}
+.asm-piece {
+    font-size: 4rem;
+    opacity: 0;
+    transform: translateY(-60px) scale(0.5);
+    transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1), opacity 0.4s ease;
+}
+*/

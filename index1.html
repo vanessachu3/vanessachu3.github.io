@@ -20,9 +20,10 @@
         <a href="/index.html" target="_self">vc</a>
         <nav class="bot_nav">
             <a href="/index.html" target="_self">home</a>
-            <a href="#proj-section" target="_self">projects</a>
+            <a href="#scene-projects" target="_self">projects</a>
+            <a href="#scene-skills" target="_self">skills</a>
             <a href="#scene-about-me" target="_self">about me</a>
-            <a href="#footer" target="_self">contact</a>
+            <button id="music-btn" aria-label="toggle music">♪</button>
         </nav>
     </nav>
 
@@ -111,12 +112,7 @@
                     <h2 id="skills_title">skills</h2>
                     <div class="skills_icon">
                         <div class="skills_box">
-                            <img src="/assets/skill icons/html-5.png" alt="HTML programming skill"/>
-                            <p>HTML</p>
-                        </div>
-                        <div class="skills_box">
-                            <img src="/assets/skill icons/css-3.png" alt="CSS programming skill"/>
-                            <p>CSS</p>
+                            <p class="skills-text">Verilog/SystemVerilog</p>
                         </div>
                         <div class="skills_box">
                             <img src="/assets/skill icons/python.png" alt="Python programming skill"/>
@@ -127,15 +123,48 @@
                             <p>C++</p>
                         </div>
                         <div class="skills_box">
+                            <p class="skills-text">Cadence</p>
+                        </div>
+                        <div class="skills_box">
+                            <p class="skills-text">QuestaSim</p>
+                        </div>
+                        <div class="skills_box">
+                            <p class="skills-text">Altium Designer</p>
+                        </div>
+                        <div class="skills_box">
+                            <p class="skills-text">KiCad</p>
+                        </div>
+                        <div class="skills_box">
+                            <p class="skills-text">Tcl</p>
+                        </div>
+                        <div class="skills_box">
+                            <p class="skills-text">Assembly (x86, 8051)</p>
+                        </div>
+                        <div class="skills_box">
+                            <p class="skills-text">MATLAB</p>
+                        </div>
+                        <div class="skills_box">
+                            <p class="skills-text">Quartus</p>
+                        </div>
+                        <div class="skills_box">
+                            <p class="skills-text">FPGA (DE1-SoC)</p>
+                        </div>
+                        <div class="skills_box">
+                            <img src="/assets/skill icons/html-5.png" alt="HTML programming skill"/>
+                            <p>HTML</p>
+                        </div>
+                        <div class="skills_box">
+                            <img src="/assets/skill icons/css-3.png" alt="CSS programming skill"/>
+                            <p>CSS</p>
+                        </div>
+                        <div class="skills_box">
                             <img src="/assets/skill icons/c.png" alt="C programming skill"/>
                             <p>C</p>
                         </div>
                         <div class="skills_box">
-                            <img src="/assets/skill icons/github.png" alt="GitHub skill"/>
+                            <img src="/assets/skill icons/github-sign.png" alt="GitHub skill"/>
                             <p>GitHub</p>
                         </div>
-                    </div>
-                    <div class="skills_icon">
                         <div class="skills_box">
                             <img src="/assets/skill icons/arduino.png" alt="Arduino skill"/>
                             <p>Arduino</p>
@@ -143,14 +172,6 @@
                         <div class="skills_box">
                             <img src="/assets/skill icons/vscode.png" alt="VS Code skill"/>
                             <p>VS Code</p>
-                        </div>
-                        <div class="skills_box">
-                            <img src="/assets/skill icons/js.png" alt="JavaScript programming skill"/>
-                            <p>JavaScript</p>
-                        </div>
-                        <div class="skills_box">
-                            <img src="/assets/skill icons/java.png" alt="Java programming skill"/>
-                            <p>Java</p>
                         </div>
                     </div>
                 </section>
@@ -163,16 +184,37 @@
                 <section class="about-me">
                     <h2 id="about-me_title">about me</h2>
                     <div class="blurb">
-                        <img id="me" src="/assets/me.jpg" alt=""/>
+                        <div class="blurb-contact">
+                            <img id="me" src="/assets/me.jpg" alt=""/>
+                            <div class="blurb-links">
+                                <a href="https://www.linkedin.com/in/vanessac3/" target="_blank">
+                                    <img id="contact" src="/assets/linkedin.png" alt="Vanessa Chu's LinkedIn profile"/>
+                                </a>
+
+                                <a href="https://www.github.com/vanessachu3" target="_blank">
+                                    <img id="contact" src="/assets/github.png" alt="Vanessa Chu's GitHub profile"/>
+                                </a>
+
+                                <a href="mailto:vanessa.chu333@gmail.com" target="_blank">
+                                    <img id="contact" src="/assets/mail.png" alt="Vanessa Chu's email"/>
+                                    <p>vanessa.chu333@gmail.com</p>
+                                </a>
+                            </div>
+                        </div>
                         <div class="blurb-text">
                             <p>
-                                Hi, I'm Vanessa Chu, an Electrical Engineering student at UBC with a passion for computer architecture and digital design, looking to pursue a career in hardware IC design.
+                                Hellos! I'm Vanessa Chu, an Electrical Engineering student at UBC with a passion for computer architecture and digital design, looking to pursue a career in hardware IC design!
+                                <!--<br><br>
+                                I've work with Verilog/SystemVerilog, C/C++, Assembly (x86), Python, and MATLAB, alongside industry-standard EDA tools including Cadence Virtuoso, Innovus, and Genus for simulation, synthesis, and place-and-route. I also have hands-on experience with QuestaSim, LTSpice, and Quartus. Professionally, I've applied these skills in PCB design (Altium Designer & KiCad), power electronics, lab testing, and technical documentation.-->
                                 <br><br>
-                                I've work with Verilog/SystemVerilog, C/C++, Assembly (x86), Python, and MATLAB, alongside industry-standard EDA tools including Cadence Virtuoso, Innovus, and Genus for simulation, synthesis, and place-and-route. I also have hands-on experience with QuestaSim, LTSpice, and Quartus. Professionally, I've applied these skills in PCB design (Altium Designer & KiCad), power electronics, lab testing, and technical documentation.
+                                When I'm not buried deep in schoolwork, I'm paddling with UBC's dragon boat team: UBC Current, crocheting, reading, building Gundams, or designing a mechanical keyboard from scratch. 
+                                I enjoy playing various video games such as TFT, Hades/Hades II, and Honkai Star Rail normally. Recently, I have also been playing Detroit: Become Human, and I plan to try Assassin's Creed Unity and Elden Ring next. 
                                 <br><br>
-                                When I'm not deep in a project, I'm paddling with UBC's dragon boat team: Current, crocheting, reading, building Gundams, or designing a mechanical keyboard from scratch. I'm also an avid gamer, a few-too-many gacha games in, and picking up board games and DnD. I speak English, Mandarin, Taiwanese, and Japanese, and I'm always curious to learn something new.
+                                Additionally, I also can speak four languages including English, Taiwanese, Mandarin, and Japanese. I always enjoy meeting new people and am always really curious to learn about anything, whether it be a professional skill or a new hobby.
                                 <br><br>
-                                Feel free to reach out via my socials below, whether it's about work or just a chat!
+                                Thank you for reading this far and nice to meet you! :)
+                                <br><br>
+                                P.S. Do you know the background song playing on this page? 
                             </p>
                             <!--<p>
                                 My name is Vanessa Chu and I am studying Electrical Engineering at UBC. I have a passion for computer architecture/digital design and I wish to pursue a career in hardware IC design! 
@@ -209,7 +251,7 @@
 
     </main>
 
-    <!--footer-->
+    <!--footer
     <nav class="footer" id="footer">
         <div class="footer_title_div">
             <h3 class="footer_titles">reach me</h3>
@@ -233,7 +275,32 @@
                 </a>
             </div>
         </div>
-    </nav>
+    </nav>-->
+
+    <!-- ── puzzle game ─────────────────────────────── 
+    <div id="puzzle-pieces-container"></div>
+
+    <div id="backpack-btn" title="Collected pieces" style="position:relative">
+        🎒<span id="backpack-badge">0</span>
+    </div>
+
+    <div id="video-overlay">
+        <div id="video-container">
+            <button id="video-close">✕</button>
+            <div id="puzzle-assembly">
+                <span class="asm-piece">🧩</span>
+                <span class="asm-piece">🧩</span>
+                <span class="asm-piece">🧩</span>
+                <span class="asm-piece">🧩</span>
+            </div>
+            <!-- Replace YOUR_VIDEO_ID below with your YouTube video ID 
+            <iframe id="yt-player" src="about:blank"
+                allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+    </div>-->
+
+    <!-- add your music file at /assets/music.mp3 (or update the src) -->
+    <audio id="bg-music" loop src="/assets/Cozy%20Company%20-%20Golden%20Apple%20Archipelago.mp3"></audio>
 
     <!--link javascript file-->
     <script src="script.js"></script>
