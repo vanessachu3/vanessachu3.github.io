@@ -27,15 +27,17 @@
 
     /* ── DOM ─────────────────────────────────────────── */
 
-    var sceneTitle    = document.getElementById('scene-title');
-    var sceneProjects = document.getElementById('scene-projects');
-    var sceneSkills   = document.getElementById('scene-skills');
-    var sceneAboutMe   = document.getElementById('scene-about-me');
+    var sceneTitle      = document.getElementById('scene-title');
+    var sceneProjects   = document.getElementById('scene-projects');
+    var sceneExperience = document.getElementById('scene-experience');
+    var sceneSkills     = document.getElementById('scene-skills');
+    var sceneAboutMe    = document.getElementById('scene-about-me');
 
-    var titleSection    = document.querySelector('.title');
-    var projectsSection = document.querySelector('.project_cards');
-    var skillsSection   = document.querySelector('.skills');
-    var aboutMeSection   = document.querySelector('.about-me');
+    var titleSection      = document.querySelector('.title');
+    var projectsSection   = document.querySelector('.project_cards');
+    var experienceSection = document.querySelector('.experience');
+    var skillsSection     = document.querySelector('.skills');
+    var aboutMeSection    = document.querySelector('.about-me');
 
     var projectCards = Array.from(document.querySelectorAll('.project_href'));
     var skillBoxes   = Array.from(document.querySelectorAll('.skills_box'));
@@ -155,26 +157,37 @@
          * bw = branch width, and bh = branch height
          * to give a randomised asymmetric plastic-sprue feel.
          */
-        var lx = 70, bw = 60, bh = 80, sw = '10';
-        var y1 = Math.round(vh * 0.3);
-        var y2 = Math.round(vh * 0.5);
-        var y3 = Math.round(vh * 0.7);
+        var lx = 70, sw = '10';
+        var y1 = Math.round(vh * 0.2);
+        var y2 = Math.round(vh * 0.4);
+        var y3 = Math.round(vh * 0.6);
+        var y4 = Math.round(vh * 0.8);
         var stroke = 'rgba(232,173,201,0.98)';
+
+        /* branches: alternating left/right with varied sizes */
+        var b1 = { dir: +1, bw: 68, bh: 62 };   /* right — wide */
+        var b2 = { dir: -1, bw: 45, bh: 88 };   /* left  — tall */
+        var b3 = { dir: +1, bw: 55, bh: 60 };   /* right — medium */
+        var b4 = { dir: -1, bw: 38, bh: 70 };   /* left  — narrow */
 
         var d = [
             'M',  lx, 70,
             'L',  lx, y1,
-            'L',  lx + bw, y1,
-            'L',  lx + bw, y1 + bh,
-            'L',  lx, y1 + bh,
+            'L',  lx + b1.dir * b1.bw, y1,
+            'L',  lx + b1.dir * b1.bw, y1 + b1.bh,
+            'L',  lx, y1 + b1.bh,
             'L',  lx, y2,
-            'L',  lx + bw, y2,
-            'L',  lx + bw, y2 + bh,
-            'L',  lx, y2 + bh,
+            'L',  lx + b2.dir * b2.bw, y2,
+            'L',  lx + b2.dir * b2.bw, y2 + b2.bh,
+            'L',  lx, y2 + b2.bh,
             'L',  lx, y3,
-            'L',  lx + bw, y3,
-            'L',  lx + bw, y3 + bh,
-            'L',  lx, y3 + bh,
+            'L',  lx + b3.dir * b3.bw, y3,
+            'L',  lx + b3.dir * b3.bw, y3 + b3.bh,
+            'L',  lx, y3 + b3.bh,
+            'L',  lx, y4,
+            'L',  lx + b4.dir * b4.bw, y4,
+            'L',  lx + b4.dir * b4.bw, y4 + b4.bh,
+            'L',  lx, y4 + b4.bh,
             'L',  lx, vh
         ].join(' ');
 
@@ -212,7 +225,7 @@
             titleSection.style.transform = 'translateY(' + (1 - op) * -70 + 'px)';
         }
 
-        /* 2 ── Projects: fade in/out; auto-play carousel while visible */
+        /* 2 ── Projects: fade in/out; carousel while visible */
         if (sceneProjects && projectsSection && projectCards.length) {
             var p = getProgress(sceneProjects);
             var op;
@@ -220,12 +233,36 @@
             else if (p > 0.88) op = 1 - norm(p, 0.88, 1.0);
             else               op = 1;
             projectsSection.style.opacity = op;
-
             if (op > 0.5) startCarousel();
             else          stopCarousel();
         }
 
-        /* 3 ── Skills: section fade in + staggered box reveal + fade out */
+        /* 3 ── Experience: parent handles fade-out; children stagger fade-in */
+        if (sceneExperience && experienceSection) {
+            var p = getProgress(sceneExperience);
+
+            /* parent only fades OUT (children start at 0 and handle fade-in) */
+            experienceSection.style.opacity   = p > 0.85 ? 1 - norm(p, 0.85, 1.0) : 1;
+            experienceSection.style.transform = 'translateY(' + norm(p, 0, 0.15) * 0 + 'px)';
+
+            /* title fades in first */
+            var expTitle = document.getElementById('experience_title');
+            if (expTitle) {
+                var tOp = norm(p, 0, 0.12);
+                expTitle.style.opacity   = tOp;
+                expTitle.style.transform = 'translateY(' + (1 - tOp) * 28 + 'px)';
+            }
+
+            /* each box fades in sequentially after the title */
+            var expBoxes = document.querySelectorAll('.experience-box');
+            expBoxes.forEach(function (box, i) {
+                var bOp = norm(p, 0.10 + i * 0.12, 0.22 + i * 0.12);
+                box.style.opacity   = bOp;
+                box.style.transform = 'translateY(' + (1 - bOp) * 28 + 'px)';
+            });
+        }
+
+        /* 4 ── Skills: fade in + staggered box reveal + fade out */
         if (sceneSkills && skillsSection) {
             var p = getProgress(sceneSkills);
             var sectionOp;
@@ -233,7 +270,6 @@
             else if (p > 0.90) sectionOp = 1 - norm(p, 0.90, 1.0);
             else               sectionOp = 1;
             skillsSection.style.opacity = sectionOp;
-
             var n = skillBoxes.length;
             skillBoxes.forEach(function (box, i) {
                 var start = 0.10 + (i / n) * 0.65;
@@ -244,10 +280,10 @@
             });
         }
 
-        /* 4 ── About me: fade in only, stays visible at end of page */
+        /* 5 ── About me: fade in, stays visible */
         if (sceneAboutMe && aboutMeSection) {
             var p  = getProgress(sceneAboutMe);
-            var op = norm(p, 0, 0.45);
+            var op = norm(p, 0, 0.55);
             aboutMeSection.style.opacity   = op;
             aboutMeSection.style.transform = 'translateY(' + (1 - op) * 40 + 'px)';
         }
@@ -278,9 +314,10 @@
 
     /* minimum progress value at which each scene's content is fully visible */
     var navReveal = {
-        'scene-projects':   { scene: sceneProjects, p: 0.08 },
-        'scene-skills':   { scene: sceneSkills, p: 0.8 },
-        'scene-about-me': { scene: sceneAboutMe,  p: 0.45 }
+        'scene-projects':   { scene: sceneProjects,   p: 0.08 },
+        'scene-experience': { scene: sceneExperience, p: 0.15 },
+        'scene-skills':     { scene: sceneSkills,     p: 0.10 },
+        'scene-about-me':   { scene: sceneAboutMe,    p: 0.45 }
     };
 
     document.querySelectorAll('.bot_nav a').forEach(function (link) {
