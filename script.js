@@ -263,8 +263,8 @@
         if (sceneProjects && projectsSection && projectCards.length) {
             var p = getProgress(sceneProjects);
             var op;
-            if      (p < 0.08) op = norm(p, 0, 0.08);
-            else if (p > 0.88) op = 1 - norm(p, 0.88, 1.0);
+            if      (p < 0.37) op = norm(p, 0, 0.37);
+            else if (p > 0.72) op = 1 - norm(p, 0.72, 1.0);
             else               op = 1;
             projectsSection.style.opacity = op;
             if (op > 0.5) startCarousel();
@@ -275,24 +275,23 @@
         if (sceneExperience && experienceSection) {
             var p = getProgress(sceneExperience);
 
-            /* parent only fades OUT (children start at 0 and handle fade-in) */
-            experienceSection.style.opacity   = p > 0.85 ? 1 - norm(p, 0.85, 1.0) : 1;
-            experienceSection.style.transform = 'translateY(' + norm(p, 0, 0.15) * 0 + 'px)';
+            /* parent fades OUT only; children handle fade-in */
+            experienceSection.style.opacity = p > 0.81 ? 1 - norm(p, 0.81, 1.0) : 1;
 
             /* title fades in first */
             var expTitle = document.getElementById('experience_title');
             if (expTitle) {
-                var tOp = norm(p, 0, 0.12);
+                var tOp = norm(p, 0, 0.20);
                 expTitle.style.opacity   = tOp;
                 expTitle.style.transform = 'translateY(' + (1 - tOp) * 28 + 'px)';
             }
 
-            /* each box fades in sequentially after the title */
+            /* each box fades in sequentially */
             var expBoxes = document.querySelectorAll('.experience-box');
             expBoxes.forEach(function (box, i) {
-                var bOp = norm(p, 0.10 + i * 0.12, 0.22 + i * 0.12);
+                var bOp = norm(p, 0.175 + i * 0.30, 0.50 + i * 0.30);
                 box.style.opacity   = bOp;
-                box.style.transform = 'translateY(' + (1 - bOp) * 28 + 'px)';
+                box.style.transform = 'translateY(' + (1 - bOp) * 32 + 'px)';
             });
         }
 
@@ -300,14 +299,15 @@
         if (sceneSkills && skillsSection) {
             var p = getProgress(sceneSkills);
             var sectionOp;
-            if      (p < 0.10) sectionOp = norm(p, 0, 0.10);
+            if      (p < 0.20) sectionOp = norm(p, 0, 0.20);
             else if (p > 0.90) sectionOp = 1 - norm(p, 0.90, 1.0);
             else               sectionOp = 1;
             skillsSection.style.opacity = sectionOp;
             var n = skillBoxes.length;
             skillBoxes.forEach(function (box, i) {
-                var start = 0.10 + (i / n) * 0.65;
-                var end   = start + 0.65 / n;
+                var step  = 0.76 / n;
+                var start = 0.08 + i * step;
+                var end   = start + step * 1.4;   /* each box ~1.6× the stagger gap */
                 var bop   = norm(p, start, end);
                 box.style.opacity   = bop;
                 box.style.transform = 'translateY(' + (1 - bop) * 28 + 'px)';
@@ -317,30 +317,34 @@
         /* 5 ── About me: fade in, stays visible */
         if (sceneAboutMe && aboutMeSection) {
             var p  = getProgress(sceneAboutMe);
-            var op = norm(p, 0, 0.55);
+            var op = norm(p, 0, 0.70);
             aboutMeSection.style.opacity   = op;
             aboutMeSection.style.transform = 'translateY(' + (1 - op) * 40 + 'px)';
         }
 
-        /* 5 ── Runners: reveal proportional to total page scroll */
-        var maxScroll = Math.max(1, document.body.scrollHeight - window.innerHeight);
-        updateRunners(Math.min(1, window.scrollY / maxScroll));
+        /* 6 ── Runners: main page only, reveal proportional to total page scroll */
+        if (runnerL) {
+            var maxScroll = Math.max(1, document.body.scrollHeight - window.innerHeight);
+            updateRunners(Math.min(1, window.scrollY / maxScroll));
+        }
     }
 
     /* ── init ────────────────────────────────────────── */
 
     setCarousel(0);
-    buildRunners();
+    if (sceneTitle) buildRunners();   /* runners only on main page */
     animate();
 
     window.addEventListener('scroll', animate, { passive: true });
 
-    /* rebuild runners if viewport is resized (dimensions change) */
+    /* rebuild runners on resize — main page only */
     window.addEventListener('resize', function () {
-        var old = document.getElementById('runners-svg');
-        if (old) old.remove();
-        runnerL = null;
-        buildRunners();
+        if (sceneTitle) {
+            var old = document.getElementById('runners-svg');
+            if (old) old.remove();
+            runnerL = null;
+            buildRunners();
+        }
         animate();
     });
 
@@ -348,10 +352,10 @@
 
     /* minimum progress value at which each scene's content is fully visible */
     var navReveal = {
-        'scene-projects':   { scene: sceneProjects,   p: 0.08 },
-        'scene-experience': { scene: sceneExperience, p: 0.15 },
-        'scene-skills':     { scene: sceneSkills,     p: 0.10 },
-        'scene-about-me':   { scene: sceneAboutMe,    p: 0.45 }
+        'scene-projects':   { scene: sceneProjects,   p: 0.50 },
+        'scene-experience': { scene: sceneExperience, p: 0.80 },
+        'scene-skills':     { scene: sceneSkills,     p: 0.90 },
+        'scene-about-me':   { scene: sceneAboutMe,    p: 0.70 }
     };
 
     document.querySelectorAll('.bot_nav a').forEach(function (link) {
@@ -384,9 +388,9 @@
     if (projectTitle) {
         var topNav = document.querySelector('.top_nav');
         window.addEventListener('scroll', function () {
-            var titleBottom = projectTitle.getBoundingClientRect().bottom;
-            var navBottom   = topNav.getBoundingClientRect().bottom;
-            topNav.classList.toggle('nav-hidden', titleBottom <= navBottom);
+            var titleTop  = projectTitle.getBoundingClientRect().top;
+            var navBottom = topNav.getBoundingClientRect().bottom;
+            topNav.classList.toggle('nav-hidden', titleTop <= navBottom);
         }, { passive: true });
     }
 
