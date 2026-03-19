@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!--head of the document-->
+<head>
+    <!--uses UTF-8 character encoding standard-->
+    <meta charset="UTF-8">
+    <!--adjusts width of webpage to device width-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--title of the webpage-->
+    <title>Vanessa Chu's Portfolio</title>
+    <!--link to css file-->
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+
+<!--main page body-->
+<body>
+    <!--header-->
+    <nav class="top_nav">
+        <a href="/index.html" target="_self">vc</a>
+        <nav class="bot_nav">
+            <a href="/index1.html" target="_self">home</a>
+            <a href="/index1.html#scene-projects" target="_self">projects</a>
+            <a href="/index1.html#scene-skills" target="_self">skills</a>
+            <a href="/index1.html#scene-about-me" target="_self">about me</a>
+            <button id="music-btn" aria-label="toggle music">♪</button>
+        </nav>
+    </nav>
+
+    <main>
+        <a class="project_a" href="/projects.html" target="_self">
+            <h1 class="project_title">SYCL badge v2</h1>
+        </a>
+        
+        <section class="project_section">
+            <!--<h3 class="project_h3">SYCL badge v2</h3>-->
+            <button class="project_github_btn" onclick="window.open('https://github.com/ZigEmbeddedGroup/sycl-badge', '_blank')">github</button>
+            <h4 class="project_h4">aug 2025 - apr 2026</h4>
+            <div class="project_skills">
+                <div class="box">
+                    <p>KiCad</p>
+                </div>
+                <div class="box">
+                    <p>PCB Design</p>
+                </div>
+                <div class="box">
+                    <p>Multimeter</p>
+                </div>
+                <div class="box">
+                    <p>Soldering</p>
+                </div>
+            </div>
+
+            <p>
+                <br>
+                The Software You Can Love (SYCL) conference is an annual conference that celebrates software and hardware projects that are open source, inclusive, and community-driven, all written in Zig. For the 2026 conference, my Capstone team and I designed an upgraded version of the badge for attendees to hack on during the conference and take home as a souvenir.
+                <br><br>
+                My role focused on the hardware design of the badge, which involved designing the PCB from scratch, selecting components, soldering the components, and extensive laboratory testing to meet design specifications.
+                <br><br>
+                The badge features a 4-layer PCB design with dynamic power switching between USB-C and batteries, an RP2354B microcontroller, external 512KB flash memory, a high-resolution LCD screen, anduser peripherals such as buttons, joysticks, LEDs, speaker, etc.
+                <br><br>
+                <b><ins>Technical Skills</ins></b>
+                <br><br>    
+            </p>
+            
+            <ul>
+                <li><b>KiCad:</b> KiCad software was used for the PCB design, capturing both the schematic and the layout</li>
+                <li><b>PCB Design:</b> Design the PCB schematic and layout, choose appropriate components, and ensure continued manufacturability, reproducibility, and sourceability</li>
+                <li><b>Multimeter:</b> Used for testing and verifying the functionality of the PCB and components</li>
+                <li><b>Soldering:</b> Performed soldering of components onto the PCB</li>
+            </ul>
+
+            <p>
+                <br>
+                <b><ins>Project Outcomes</ins></b>
+                <br><br>
+                At the end of the project, the design meets all the following specifications placed by our client, the SYCL conference organizer:
+            </p>
+            
+            <ul>
+                <li>Dynamic power switching between USB-C and 3 triple-A batteries with voltage regulation</li>
+                <li>A power switch to turn on and off the board</li>
+                <li>Include various user interfaces such as buttons, joysticks, LEDs, light sensor, speaker, LCD, etc.</li>
+                <li>Final product remains portable and lightweight (<60g and smaller than 110x65x25 mm)</li>
+                <li>Final total cost per board is less than $30</li>
+                <li>Specific LCD (DT018BTFT-SHB) and MCU (RP2354B) as supplied by client</li>
+                <li>The OS and cartridges (programs) must be programmable over USB-C</li>
+                <li>Ensure manufacturability from PCB manufacturer, JLCPCB, and all components are sourceable long-term on JLCPCB parts as well</li>
+                <li>Ensure battery power source uses three triple-A batteries</li>
+                <li>Voltage boost circuitry to boost voltage from 4.5V to 6V for the LCD</li>
+            </ul>
+                
+            <p>
+                <br>
+                The top and bottom 3D renderings of the PCB design are as follows:
+                <img src="assets/project 6/SYCL badge top 3d.png" alt="SYCL badge top 3D" style="width: 70%; height: 70%;">
+                <img src="assets/project 6/SYCL badge bot 3d.png" alt="SYCL badge bottom 3D" style="width: 70%; height: 70%;">
+                For more information, on the software and schematic, the GitHub repo containing source code and design files is available above. 
+        </section>
+    </main>
+
+    <!-- add your music file at /assets/music.mp3 (or update the src) -->
+    <audio id="bg-music" loop src="/assets/Cozy%20Company%20-%20Golden%20Apple%20Archipelago.mp3"></audio>
+
+    <!--link javascript file-->
+    <script src="script.js"></script>
+
+    <!--footer-->
+    <nav class="footer">
+        <div class="footer-left">
+            <p>&copy; 2026 by yours truly, vanessa chu :)</p>
+        </div>
+        <div class="footer-right">
+            <a href="https://www.linkedin.com/in/vanessac3/" target="_blank">
+                <img id="contact" src="/assets/linkedin.png" alt="Vanessa Chu's LinkedIn profile"/>
+            </a>
+
+            <a href="https://www.github.com/vanessachu3" target="_blank">
+                <img id="contact" src="/assets/github.png" alt="Vanessa Chu's GitHub profile"/>
+            </a>
+
+            <a href="mailto:vanessa.chu333@gmail.com" target="_blank">
+                <img id="contact" src="/assets/mail.png" alt="Vanessa Chu's email"/>
+            </a>
+        </div>
+    </nav>
+</body>

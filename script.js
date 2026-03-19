@@ -82,6 +82,40 @@
         carTimer = null;
     }
 
+    /* ── carousel manual buttons ─────────────────────── */
+
+    var resumeTimer = null;
+
+    function pauseAndScheduleResume() {
+        stopCarousel();
+        clearTimeout(resumeTimer);
+        resumeTimer = setTimeout(function () {
+            /* only restart if the projects section is currently visible */
+            if (projectsSection && parseFloat(projectsSection.style.opacity || '0') > 0.5) {
+                startCarousel();
+            }
+        }, 5000);
+    }
+
+    var btnLeft  = document.querySelector('.carousel-btn-left');
+    var btnRight = document.querySelector('.carousel-btn-right');
+
+    if (btnLeft) {
+        btnLeft.addEventListener('click', function () {
+            carIdx = (carIdx - 1 + projectCards.length) % projectCards.length;
+            setCarousel(carIdx);
+            pauseAndScheduleResume();
+        });
+    }
+
+    if (btnRight) {
+        btnRight.addEventListener('click', function () {
+            carIdx = (carIdx + 1) % projectCards.length;
+            setCarousel(carIdx);
+            pauseAndScheduleResume();
+        });
+    }
+
     /* ── background music ────────────────────────────── */
     var musicBtn    = document.getElementById('music-btn');
     var bgMusic     = document.getElementById('bg-music');

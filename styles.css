@@ -324,7 +324,7 @@ h1 {
     position: relative;
     width: 800px;
     flex-shrink: 0;
-    height: 380px;
+    height: 60vh;
     overflow: hidden;   /* prevents cards from bleeding over the h2 title */
 }
 
@@ -337,7 +337,7 @@ h1 {
     position: absolute;
     left: 50%;
     top: 50%;
-    margin-left: -140px;    /* half of card width (280px) */
+    margin-left: -150px;    /* half of card width (300px) */
     margin-top: -150px;     /* half of card height (300px) */
     text-decoration: none;
     will-change: transform, opacity;
@@ -348,10 +348,14 @@ h1 {
 .card {
     border: 2px solid rgb(232,173,201);
     border-radius: 10px;
-    width: 280px;
+    width: 300px;
     height: 300px;
     background-color: rgb(232,173,201);
     transition: transform 0.25s ease, box-shadow 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding-bottom: 15px;
 }
 
 .project_href:hover .card {
@@ -389,10 +393,8 @@ h2 {
 
 .card_h3 {
     margin: 0;
-    padding-top: 25px;
-    padding-left: 10px;
-    padding-right: 10px;
-    height: 80px;
+    padding: 15px;
+    height: auto;
     font-weight: 800;
     text-align: center;
     color: rgb(79,80,100);
@@ -405,10 +407,67 @@ h2 {
     color: rgb(79,80,100);
 }
 
+.card_skills {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    margin: 5px 0;
+}
+
+.card-box {
+    font-size: small;
+    display: inline-block;
+    background-color: rgba(117, 118, 129, 0.5);
+    border: 3px solid rgb(79,80,100);
+    border-radius: 10px;
+    text-align: center;
+    color: rgb(47, 48, 58);
+    padding: 0px 5px;
+    margin: 2.5px 2.5px;
+}
+
+.card-box p {
+    margin: 0;
+    white-space: nowrap;
+    display: inline-block;
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background: rgb(232,173,201);
+    border: 2px solid rgb(232,173,201);
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    color: rgb(250,230,241);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s;
+    font-family: system-ui, sans-serif;
+}
+
+.carousel-btn:hover {
+    background: rgb(250,230,241);
+}
+
+.carousel-btn-left  { left:  4px; padding-right: 8px; }
+.carousel-btn-right { right: 4px; padding-left: 8px; }
+
 .project_info {
     text-align: center;
     padding-left: 20px;
     padding-right: 20px;
+    margin-top: 0px;
     color: black;
 }
 
@@ -447,7 +506,8 @@ h2 {
     width: 100px;
     height: 100px;
     border-radius: 15px;
-    margin: 20px;
+    margin: 30px;
+    margin-right: 20px;
 }
 
 .experience-text {
@@ -458,20 +518,21 @@ h2 {
 }
 
 .experience-text h3 {
-    margin: 10px 0px 0px;
+    margin: 30px 0px 0px 0px;
     font-weight: 800;
     color: rgb(79,80,100);
 }
 
 .experience-text h4 {
-    margin: 10px 0px 0px;
+    margin: 10px 0px;
     font-weight: 800;
     color: rgb(79,80,100);
 }
 
 .experience-text p {
-    margin: 10px 0px;
+    margin: 0px 30px 30px 0px;
     color: rgb(79,80,100);
+    text-align: justify;
 }
 
 /* ── skills section ──────────────────────────────────── */
@@ -591,7 +652,6 @@ h2 {
     width: 25px;
     height: 25px;
     margin: 8px;
-    filter: grayscale(50%);
 }
 
 .blurb-links a {
@@ -609,8 +669,10 @@ h2 {
     border: 3px solid rgb(232,173,201);
     border-radius: 20px;
     background-color: rgb(232,173,201);
-    width: 40vw;
-    margin: 50px 30px;
+    width: 50vw;
+    margin: 15px 0px;
+    margin-left: 30px;
+    text-align: justify;
 }
 
 .blurb-text p {
@@ -626,9 +688,9 @@ h2 {
     justify-content: space-between;
     align-items: center;
     width: 100vw;
-    height: 5vh;
+    height: vh;
     background-color: rgb(232,173,201);
-    margin: 30px 0px 0px;
+    margin-top: 20px;
 }
 
 .footer-left {
