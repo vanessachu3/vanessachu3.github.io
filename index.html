@@ -13,44 +13,412 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 
+<!--main page body-->
 <body>
     <!--header-->
     <nav class="top_nav">
         <a href="/index.html" target="_self">vc</a>
         <nav class="bot_nav">
             <a href="/index.html" target="_self">home</a>
-            <a href="/index.html" target="_self">projects</a>
-            <a href="/index.html" target="_self">about me</a>
-            <a href="/index.html" target="_self">contact</a>
+            <a href="#scene-projects" target="_self">projects</a>
+            <a href="#scene-experience" target="_self">experience</a>
+            <a href="#scene-skills" target="_self">skills</a>
+            <a href="#scene-about-me" target="_self">about me</a>
+            <button id="music-btn" aria-label="toggle music">♪</button>
         </nav>
     </nav>
 
     <main>
-        <!--title-->
-        <section class="title">
-            <h1 id="name">UNDER MAINTENANCE</h1>
-            <hr id="beneath_name">
-        </section>
+
+        <!-- ── Scene 1: Title ─────────────────────────────── -->
+        <div class="scroll-scene" id="scene-title">
+            <div class="scene-content">
+                <section class="title">
+                    <div class="hover_title">
+                        <span class="name-hover">
+                            <span class="gundam-clip"><img class="gundam-img" src="/assets/Perfect Strike Freedom Rouge.png" alt=""/></span>
+                            <span class="yarn-clip"><img class="yarn-img" src="/assets/yarn bowl.png" alt=""/></span>
+                            <span class="books-clip"><img class="books-img" src="/assets/books.png" alt=""/></span>
+                            <span class="choncc-clip"><img class="choncc-img" src="/assets/choncc.png" alt=""/></span>
+                            <span class="coding-clip"><img class="coding-img" src="/assets/coding.png" alt=""/></span>
+                            <span class="baking-clip"><img class="baking-img" src="/assets/baking.png" alt=""/></span>
+                            <span class="db-clip"><img class="db-img" src="/assets/dragonboat.png" alt=""/></span>
+                            <span class="sparkles-clip1"><img class="sparkles-img1" src="/assets/sparkles.png" alt=""/></span>
+                            <span class="sparkles-clip2"><img class="sparkles-img2" src="/assets/sparkles.png" alt=""/></span>
+                            <span class="sparkles-clip3"><img class="sparkles-img3" src="/assets/sparkles.png" alt=""/></span>
+                            <span class="sparkles-clip4"><img class="sparkles-img4" src="/assets/sparkles.png" alt=""/></span>
+                            <span class="sparkles-clip5"><img class="sparkles-img5" src="/assets/sparkles.png" alt=""/></span>
+                            <span class="sparkles-clip6"><img class="sparkles-img6" src="/assets/sparkles.png" alt=""/></span>
+                            <span class="sparkles-clip7"><img class="sparkles-img7" src="/assets/sparkles.png" alt=""/></span>
+
+                            <h1 id="name"><span id="adjust_v">V</span>ANESSA CHU</h1>
+                        </span>
+                        <hr id="beneath_name">
+                        <p id="quote_1">every person is a composition of stories that fit together like puzzle pieces~</p>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- ── Scene 2: Projects ──────────────────────────── -->
+        <div class="scroll-scene" id="scene-projects">
+            <div class="scene-content">
+                <section class="project_cards" id="proj-section">
+                    <h2 id="projects"><span id="split1">proj-</span><span id="split2">ects</span></h2>
+                    <div class="card_container">
+                        <button class="carousel-btn carousel-btn-left" aria-label="previous project">&#9664;</button>
+                        <button class="carousel-btn carousel-btn-right" aria-label="next project">&#9654;</button>
+                        <a class="project_href" href="/project_7.html" target="_self">
+                            <div class="card">
+                                <h3 class="card_h3">CMOS low noise amplifier</h3>
+                                <h4 class="card_h4">feb 2026 - mar 2026</h4>
+                                <div class="card_skills">
+                                    <div class="card-box">
+                                        <p>Cadence (Virtuoso)</p>
+                                    </div>
+                                </div>
+                                <p class="project_info">designed a CMOS low noise amplifier with source inductor degeneration</p>
+                            </div>
+                        </a>
+                        <a class="project_href" href="/project_6.html" target="_self">
+                            <div class="card">
+                                <h3 class="card_h3">SYCL badge v2</h3>
+                                <h4 class="card_h4">aug 2025 - apr 2026</h4>
+                                <div class="card_skills">
+                                    <div class="card-box">
+                                        <p>KiCad</p>
+                                    </div>
+                                    <div class="card-box">
+                                        <p>PCB Design</p>
+                                    </div>
+                                    <div class="card-box">
+                                        <p>Multimeter</p>
+                                    </div>
+                                    <div class="card-box">
+                                        <p>Soldering</p>
+                                    </div>
+                                </div>
+                                <p class="project_info">designed a 4-layer game console PCB for the Software You Can Love (SYCL) conference featuring dynamic power switching between USB-C and batteries, external 512KB flash, user peripherals, etc.</p>
+                            </div>
+                        </a>
+                        <a class="project_href" href="/project_5.html" target="_self">
+                            <div class="card">
+                                <h3 class="card_h3">dot-product-based DNN accelerator</h3>
+                                <h4 class="card_h4">nov 2025 - dec 2025</h4>
+                                <div class="card_skills">
+                                    <div class="card-box">
+                                        <p>SystemVerilog</p>
+                                    </div>
+                                    <div class="card-box">
+                                        <p>QuestaSim</p>
+                                    </div>
+                                    <div class="card-box">
+                                        <p>Cadence (Genus, Innovus)</p>
+                                    </div>
+                                    <div class="card-box">
+                                        <p>TCL</p>
+                                    </div>
+                                </div>
+                                <p class="project_info">designed a 4-element 16-bit fixed-point multiplier module in SystemVerilog with a dual-port memory subsystem to store 64 sequential 32-bit multiplier outputs</p>
+                            </div>
+                        </a>
+                        <a class="project_href" href="/project_4.html" target="_self">
+                            <div class="card">
+                                <h3 class="card_h3">LEM signal conditioning board</h3>
+                                <h4 class="card_h4">may 2025 - aug 2025</h4>
+                                <div class="card_skills">
+                                    <div class="card-box">
+                                        <p>Altium Designer</p>
+                                    </div>
+                                    <div class="card-box">
+                                        <p>PCB Design</p>
+                                    </div>
+                                </div>
+                                <p class="project_info">designed a high-accuracy, low-noise signal conditioning board to process measured currents (125A-3000A) from a transducer and output a converted voltage signal (full scale 10V)</p>
+                            </div>
+                        </a>
+                        <!--<a class="project_href" href="/project_3.html" target="_self">
+                            <div class="card">
+                                <h3 class="card_h3">data replacement python script</h3>
+                                <h4 class="card_h4">may 2025 - aug 2025</h4>
+                                <div class="card_skills">
+                                    <div class="card-box">
+                                        <p>Python</p>
+                                    </div>
+                                    <div class="card-box">
+                                        <p>VS Code</p>
+                                    </div>
+                                </div>
+                                <p class="project_info">designed a Python executable script with interactive GUI to aid users in replacing desired sections of AFE calibration data with another set of calibration data</p>
+                            </div>
+                        </a>
+                        <a class="project_href" href="/project_2.html" target="_self">
+                            <div class="card">
+                                <h3 class="card_h3">simple ipod finite state machine</h3>
+                                <h4 class="card_h4">may 2024 - jun 2024</h4>
+                                <div class="card_skills">
+                                    <div class="card-box">
+                                        <p>Verilog</p>
+                                    </div>
+                                     <div class="card-box">
+                                        <p>Quartus</p>
+                                    </div>
+                                    <div class="card-box">
+                                        <p>DSP</p>
+                                    </div>
+                                    <div class="card-box">
+                                        <p>PicoBlaze</p>
+                                    </div>
+                                </div>
+                                <p class="project_info">utilized Finite State Machines (FSM) written in Verilog to read 256 sound samples of 8-bits at 22kHz from a Flash memory to audio Digital-to-Analog converter to play songs</p>
+                            </div>
+                        </a>
+                        <a class="project_href" href="/project_1.html" target="_self">
+                            <div class="card">
+                                <h3 class="card_h3">simple RISC machine</h3>
+                                <h4 class="card_h4">sept 2022 - dec 2022</h4>
+                                <div class="card_skills">
+                                    <div class="card-box">
+                                        <p>SystemVerilog</p>
+                                    </div>
+                                     <div class="card-box">
+                                        <p>Quartus</p>
+                                    </div>
+                                    <div class="card-box">
+                                        <p>QuestaSim</p>
+                                    </div>
+                                </div>
+                                <p class="project_info">designed a 16-bit CPU using SystemVerilog to operate memory and RAM to control simple instructions</p>
+                            </div>
+                        </a>-->
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- ── Scene 3: Experience ────────────────────────────── -->
+        <div class="scroll-scene" id="scene-experience">
+            <div class="scene-content">
+                <section class="experience">
+                    <h2 id="experience_title">experience</h2>
+                    <div class="experience-box">
+                        <img class="experience-icons" src="/assets/experience icons/greenlight innovation.jpg" alt="Greenlight Innovation"/>
+                        <div class="experience-text">
+                            <h3>Electronics Development Support Co-op | Greenlight Innovation</h3>
+                            <h4>sept 2024 - aug 2025</h4>
+                            <p>Engineered precision analog signal conditioning PCB hardware and automated calibration tools using Python, delivering sub-0.05% accuracy across high-current measurement systems while supporting full production documentation and assembly.</p>
+                        </div>
+                    </div>
+                    <div class="experience-box">
+                        <img class="experience-icons" src="/assets/experience icons/cci canadian circuits.jpg" alt="CCI Canadian Circuits"/>
+                        <div class="experience-text">
+                            <h3>CAD/CAM Electrical Engineer | CCI Canadian Circuits Inc.</h3>
+                            <h4>jan 2024 - aug 2024</h4>
+                            <p>Managed end-to-end PCB fabrication workflows, from multi-layer CAD/CAM design to DFM-driven engineering collaboration and final QA, ensuring consistent quality across hundreds of customer boards.</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- ── Scene 4: Skills ────────────────────────────── -->
+        <div class="scroll-scene" id="scene-skills">
+            <div class="scene-content">
+                <section class="skills">
+                    <h2 id="skills_title">skills</h2>
+                    <div class="skills_icon">
+                        <div class="skills_box">
+                            <p class="skills-text">Verilog/SystemVerilog</p>
+                        </div>
+                        <div class="skills_box">
+                            <img src="/assets/skill icons/python.png" alt="Python programming skill"/>
+                            <p>Python</p>
+                        </div>
+                        <div class="skills_box">
+                            <img src="/assets/skill icons/c-.png" alt="C++ programming skill"/>
+                            <p>C++</p>
+                        </div>
+                        <div class="skills_box">
+                            <p class="skills-text">Cadence</p>
+                        </div>
+                        <div class="skills_box">
+                            <p class="skills-text">QuestaSim</p>
+                        </div>
+                        <div class="skills_box">
+                            <p class="skills-text">Altium Designer</p>
+                        </div>
+                        <div class="skills_box">
+                            <p class="skills-text">KiCad</p>
+                        </div>
+                        <div class="skills_box">
+                            <p class="skills-text">Tcl</p>
+                        </div>
+                        <div class="skills_box">
+                            <p class="skills-text">Assembly (x86, 8051)</p>
+                        </div>
+                        <div class="skills_box">
+                            <p class="skills-text">MATLAB</p>
+                        </div>
+                        <div class="skills_box">
+                            <p class="skills-text">Quartus</p>
+                        </div>
+                        <div class="skills_box">
+                            <p class="skills-text">FPGA (DE1-SoC)</p>
+                        </div>
+                        <div class="skills_box">
+                            <img src="/assets/skill icons/html-5.png" alt="HTML programming skill"/>
+                            <p>HTML</p>
+                        </div>
+                        <div class="skills_box">
+                            <img src="/assets/skill icons/css-3.png" alt="CSS programming skill"/>
+                            <p>CSS</p>
+                        </div>
+                        <div class="skills_box">
+                            <img src="/assets/skill icons/c.png" alt="C programming skill"/>
+                            <p>C</p>
+                        </div>
+                        <div class="skills_box">
+                            <img src="/assets/skill icons/github-sign.png" alt="GitHub skill"/>
+                            <p>GitHub</p>
+                        </div>
+                        <div class="skills_box">
+                            <img src="/assets/skill icons/arduino.png" alt="Arduino skill"/>
+                            <p>Arduino</p>
+                        </div>
+                        <div class="skills_box">
+                            <img src="/assets/skill icons/vscode.png" alt="VS Code skill"/>
+                            <p>VS Code</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- ── Scene 5: About Me ─────────────────────────── -->
+        <div class="scroll-scene" id="scene-about-me">
+            <div class="scene-content">
+                <section class="about-me">
+                    <h2 id="about-me_title">about me</h2>
+                    <div class="blurb">
+                        <div class="blurb-contact">
+                            <img id="me" src="/assets/me.jpg" alt=""/>
+                            <div class="blurb-links">
+                                <a href="https://www.linkedin.com/in/vanessac3/" target="_blank">
+                                    <img id="contact" src="/assets/linkedin.png" alt="Vanessa Chu's LinkedIn profile"/>
+                                </a>
+
+                                <a href="https://www.github.com/vanessachu3" target="_blank">
+                                    <img id="contact" src="/assets/github.png" alt="Vanessa Chu's GitHub profile"/>
+                                </a>
+
+                                <a href="mailto:vanessa.chu333@gmail.com" target="_blank">
+                                    <img id="contact" src="/assets/mail.png" alt="Vanessa Chu's email"/>
+                                    <!--<p>vanessa.chu333@gmail.com</p>-->
+                                </a>
+                            </div>
+                        </div>
+                        <div class="blurb-text">
+                            <p>
+                                Hellos! I'm Vanessa Chu, an Electrical Engineering student at UBC with a passion for computer architecture and digital design, looking to pursue a career in hardware IC design!
+                                <!--<br><br>
+                                I've work with Verilog/SystemVerilog, C/C++, Assembly (x86), Python, and MATLAB, alongside industry-standard EDA tools including Cadence Virtuoso, Innovus, and Genus for simulation, synthesis, and place-and-route. I also have hands-on experience with QuestaSim, LTSpice, and Quartus. Professionally, I've applied these skills in PCB design (Altium Designer & KiCad), power electronics, lab testing, and technical documentation.-->
+                                <br><br>
+                                When I'm not buried deep in schoolwork, I'm paddling with UBC's dragon boat team: UBC Current, crocheting, reading, building Gundams, or designing a mechanical keyboard from scratch. 
+                                I enjoy playing various video games such as TFT, Hades/Hades II, and Honkai Star Rail normally. Recently, I have also been playing Detroit: Become Human, and I plan to try Assassin's Creed Unity and Elden Ring next. 
+                                <br><br>
+                                Additionally, I also can speak four languages including English, Taiwanese, Mandarin, and Japanese. I always enjoy meeting new people and am always really curious to learn about anything, whether it be a professional skill or a new hobby.
+                                <br><br>
+                                Thank you for reading this far and nice to meet you! :)
+                                <br><br>
+                                P.S. Do you know the background song playing on this page? 
+                            </p>
+                            <!--<p>
+                                My name is Vanessa Chu and I am studying Electrical Engineering at UBC. I have a passion for computer architecture/digital design and I wish to pursue a career in hardware IC design! 
+                                I have experience with:
+                            </p>
+                            <ul>
+                                <li>Coding languages such as Verilog/SystemVerilog, C/C++, Assembly (x86), Python, MATLAB, and some simple Tcl scripting.</li>
+                                <li>Cadence suites such as Virtuoso, Innovus, and Genus to simulate digital circuits, synthesize design, and perform place-and-route (PNR) on designs.</li>
+                                <li>Additonal simulation tools such as QuestaSim, LTSpice, and Quartus were used extensively.</li>
+                            </ul>
+                            <p>
+                                I am equipped with professional experience in PCB design (with Altium Designer and KiCad), power electronics, extensive laboratory tests for electronics, documentation, writing Python scripts, and developing test plans.
+                            </p>
+                            <p>
+                                Outside of academics and professional experience, I enjoy multiple hobbies when I am not busy grinding away on some project. I mostly enjoy playing video games such as TFT, Hades/Hades II, Honkai Star Rail, League of Legends, and Monster Hunter Wilds.
+                                Recently, I have also been playing Detroit: Become Human, and I plan to try Assassin's Creed Unity , Yakuza, and Elden Ring next. I also crochet and read when I have more extended breaks from school. I am also a part of UBC's dragonboating team: Current. 
+                                A little bit more fun facts about me:
+                            </p>
+                            <ul>
+                                <li>Aside from English, I also speak Taiwanese, Mandarin/Chinese, and Japanese.</li>
+                                <li>Recently started playing board games with friends and am trying out DnD soon!</li>
+                                <li>Maybe likes gambling (Texas Hold'Em, gacha games) a little too much... (want to learn Mahjong next).</li>
+                                <li>Enjoys meeting new people and is really curious to learn about anything and everything (hence my many hobbies...).</li>
+                                <li>Working on making a mechanical keyboard from scratch (PCB up) currently, then upgrading my water-cooled PC next.</li>
+                            </ul>
+                            <p>
+                                Feel free to reach me at any of my socials linked below for more information or just for a chat!
+                            </p>-->
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
     </main>
 
-    <!--footer-->
-    <nav class="footer">
-        <!--<div id="contact_info"></div>-->
-        <h3 id="footer_titles">reach me</h3>
-        <div id="links">
-            <!--replace "linkedin:" with icons maybe?-->
-            <p>vanessa chu</p>
-            <a href="https://www.linkedin.com/in/vanessac3/" target="_blank">linkedin</a>
-            <a href="mailto:chuva3@student.ubc.ca" target="_blank">chuva3@student.ubc.ca</a>
-            <p>(604) 506-3511</p>
+    <!--footer
+    <nav class="footer" id="footer">
+        <div class="footer_title_div">
+            <h3 class="footer_titles">reach me</h3>
         </div>
 
-        <h3 id="footer_titles">pages</h3>
-        <div id="links">
-            <a href="/index.html" target="_self">home</a>
-            <a href="/index.html" target="_self">projects</a>
-            <a href="/index.html" target="_self">about me</a>
-            <a href="/index.html" target="_self">contact</a>
+        <div class="footer_section">
+            <div id="links">
+                <a href="https://www.linkedin.com/in/vanessac3/" target="_blank">
+                    <img src="/assets/skill icons/linkedin.png" alt="Vanessa Chu's LinkedIn profile"/>
+                    <p>vanessac3</p>
+                </a>
+
+                <a href="https://www.github.com/vanessachu3" target="_blank">
+                    <img src="/assets/skill icons/github.png" alt="Vanessa Chu's GitHub profile"/>
+                    <p>vanessachu3</p>
+                </a>
+
+                <a href="mailto:vanessa.chu333@gmail.com" target="_blank">
+                    <img src="/assets/skill icons/mail.png" alt="Vanessa Chu's email"/>
+                    <p>vanessa.chu333@gmail.com</p>
+                </a>
+            </div>
         </div>
-    </nav>
+    </nav>-->
+
+    <!-- ── puzzle game ─────────────────────────────── 
+    <div id="puzzle-pieces-container"></div>
+
+    <div id="backpack-btn" title="Collected pieces" style="position:relative">
+        🎒<span id="backpack-badge">0</span>
+    </div>
+
+    <div id="video-overlay">
+        <div id="video-container">
+            <button id="video-close">✕</button>
+            <div id="puzzle-assembly">
+                <span class="asm-piece">🧩</span>
+                <span class="asm-piece">🧩</span>
+                <span class="asm-piece">🧩</span>
+                <span class="asm-piece">🧩</span>
+            </div>
+            <!-- Replace YOUR_VIDEO_ID below with your YouTube video ID 
+            <iframe id="yt-player" src="about:blank"
+                allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+    </div>-->
+
+    <!-- add your music file at /assets/music.mp3 (or update the src) -->
+    <audio id="bg-music" loop src="/assets/Cozy%20Company%20-%20Golden%20Apple%20Archipelago.mp3"></audio>
+
+    <!--link javascript file-->
+    <script src="script.js"></script>
 </body>
+</html>
