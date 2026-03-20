@@ -296,18 +296,18 @@
         }
 
         /* 4 ── Skills: fade in + staggered box reveal + fade out */
+        /* scene-skills = 250vh → scrollable ≈ 150vh                */
         if (sceneSkills && skillsSection) {
             var p = getProgress(sceneSkills);
             var sectionOp;
-            if      (p < 0.20) sectionOp = norm(p, 0, 0.20);
-            else if (p > 0.90) sectionOp = 1 - norm(p, 0.90, 1.0);
+            if      (p < 0.04) sectionOp = norm(p, 0, 0.04);
+            else if (p > 0.93) sectionOp = 1 - norm(p, 0.93, 1.0);
             else               sectionOp = 1;
             skillsSection.style.opacity = sectionOp;
-            var n = skillBoxes.length;
+            /* each box: 8 vh fade, 6 vh stagger gap, first starts at 8 vh */
             skillBoxes.forEach(function (box, i) {
-                var step  = 0.76 / n;
-                var start = 0.08 + i * step;
-                var end   = start + step * 1.4;   /* each box ~1.6× the stagger gap */
+                var start = (8 + i * 4) / 150;
+                var end   = start + 8 / 150;
                 var bop   = norm(p, start, end);
                 box.style.opacity   = bop;
                 box.style.transform = 'translateY(' + (1 - bop) * 28 + 'px)';
@@ -354,7 +354,7 @@
     var navReveal = {
         'scene-projects':   { scene: sceneProjects,   p: 0.50 },
         'scene-experience': { scene: sceneExperience, p: 0.80 },
-        'scene-skills':     { scene: sceneSkills,     p: 0.90 },
+        'scene-skills':     { scene: sceneSkills,     p: 0.35 },
         'scene-about-me':   { scene: sceneAboutMe,    p: 0.70 }
     };
 

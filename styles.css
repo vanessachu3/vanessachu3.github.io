@@ -103,7 +103,7 @@ body {
 #scene-title      { height: 140vh; }
 #scene-projects   { height: 160vh; }
 #scene-experience { height: 140vh; }
-#scene-skills     { height: 180vh; }
+#scene-skills     { height: 250vh; }
 #scene-about-me   { height: 120vh; }
 
 .scene-content {
@@ -154,7 +154,7 @@ h1 {
 
 #quote_1 {
     margin-top: 0;
-    margin-bottom: 0;
+    margin-bottom: 15px;
     font-weight: 800;
     font-size: clamp(0.9rem, 3vw, 1.5rem);
     color: rgb(232,173,201);
@@ -631,8 +631,8 @@ h2 {
 }
 
 #me {
-    width: 335px;
-    height: 447px;
+    width: 310px;
+    height: 413px;
     border-radius: 20px;
     display: block;
     margin-bottom: 20px;
@@ -643,10 +643,6 @@ h2 {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    background-color: rgb(232,173,201);
-    border: 5px solid rgb(232,173,201);
-    border-radius: 20px;
-    width: 180px;
 }
 
 #contact {
@@ -670,7 +666,7 @@ h2 {
     border: 3px solid rgb(232,173,201);
     border-radius: 20px;
     background-color: rgb(232,173,201);
-    width: 50vw;
+    width: 45vw;
     margin: 15px 0px;
     margin-left: 30px;
     text-align: justify;
@@ -680,6 +676,33 @@ h2 {
     margin: 35px;
     font-weight: 500;
     font-size: large;
+}
+
+.blurb-a {
+    display: flex;
+    flex-direction: row;
+    background-color: rgb(232,173,201);
+    border: 5px solid rgb(232,173,201);
+    border-radius: 20px;
+    width: fit-content;
+    padding : 0px 10px;
+}
+
+.resume {
+    margin: 0px 0px 0px 20px;
+    background-color: rgb(232,173,201);
+    border: 5px solid rgb(232,173,201);
+    border-radius: 20px;
+    height: 51px;
+    padding: 0px 10px 0px 2px;
+}
+
+.resume a {
+    margin: 0px;
+}
+
+.resume p {
+    margin: 0px;
 }
 
 /* ── footer ──────────────────────────────────────────── */
